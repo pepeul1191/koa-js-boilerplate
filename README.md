@@ -8,4 +8,5 @@ Instlación de dependencias:
 
 Fuentes:
 
-+ https://serverjs.io/documentation/
++ https://koajs.com/#application
++ https://github.com/koajs/static

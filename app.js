@@ -6,6 +6,7 @@ var middleware = require('./configs/middlewares');
 const app = new Koa();
 
 app.use(middleware.preResponse());
+app.use(middleware.showLogs());
 
 app.use(static(__dirname + '/public'));
 

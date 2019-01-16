@@ -3,6 +3,7 @@ var constants = require('./constants');
 function preResponse(){
   return async (ctx, next) => {
     ctx.set('Server', 'Ubuntu');
+    ctx.set('X-Powered-By', 'Node.js');
     await next();
   }
 }

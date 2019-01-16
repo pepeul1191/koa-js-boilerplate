@@ -1,6 +1,7 @@
 const Router = require('koa-trie-router');
 var constants = require('../configs/constants');
-//var helpers = require('../configs/helpers');
+var helpers = require('../configs/helpers');
+var errorHelper = require('../helpers/error_helper');
 
 let router = new Router();
 
@@ -9,9 +10,9 @@ router.get('/error/access/404', async (ctx, next) => {
   var locals = {
     constants: constants.data,
     title: 'Error',
-    //helpers: helpers,
-    //csss: errorHelper.accessCss(),
-    //jss: errorHelper.accessJs(),
+    helpers: helpers,
+    csss: errorHelper.accessCss(),
+    jss: errorHelper.accessJs(),
     numero: 8080,
     //contents: errorContent.content,
     //lang: middlewares.lang(req),

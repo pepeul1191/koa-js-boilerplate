@@ -2,7 +2,7 @@ const data = {
   sistema_id: 1,
   base_url: 'http://localhost:3000/',
   static_url: 'http://localhost:3000/',
-  static: 'desarrollo',
+  static: 'dev',
   middleware_csrf : 'able',
   middleware_session : 'disable',
   middleware_logs : 'able',

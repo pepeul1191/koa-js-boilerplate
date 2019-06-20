@@ -25,6 +25,8 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "bootstrap": "^4.1.1",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "jquery-simple-websocket": "*",
+    "socket.io": "2.2.0"
   }
 }

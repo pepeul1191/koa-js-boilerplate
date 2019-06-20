@@ -15,3 +15,7 @@ Fuentes:
 + https://github.com/koajs/trie-router
 + https://github.com/koajs/ejs
 + https://github.com/pepeul1191/express-nodejs-v3
++ https://www.npmjs.com/package/koa-socket-2
++ https://www.educba.com/websocket-vs-socket-io/
++ https://libraries.io/bower/socket.io
++ https://gist.github.com/anandgeorge/2814934

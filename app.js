@@ -3,6 +3,7 @@ const Koa = require('koa');
 const static = require('koa-static');
 const routes = require('koa-route');
 const render = require('koa-ejs');
+const sockets = require('./configs/sockets');
 var middleware = require('./configs/middlewares');
 const homeRouter =  require('./routes/home');
 const errorRouter =  require('./routes/error');
@@ -19,6 +20,8 @@ render(app, {
 // middlewares
 app.use(middleware.preResponse());
 app.use(middleware.showLogs());
+// sockets
+sockets.registerApp(app);
 // static files
 app.use(static(__dirname + '/public'));
 // routes

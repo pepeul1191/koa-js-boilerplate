@@ -38,5 +38,9 @@ app.use(routes.get('/test', (ctx) => {
 }));
 app.use(homeRouter.routes);
 app.use(errorRouter.routes);
+// error
+app.on('error', function (error) {
+  console.log(error);
+})
 // port
 app.listen(3000);

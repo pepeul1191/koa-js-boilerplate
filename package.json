@@ -17,6 +17,7 @@
     "koa-socket-2": "^1.1.0",
     "koa-static": "^5.0.0",
     "koa-trie-router": "^2.1.6",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "thinky": "^2.3.9"
   }
 }

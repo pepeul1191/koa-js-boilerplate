@@ -18,4 +18,5 @@ Fuentes:
 + https://www.npmjs.com/package/koa-socket-2
 + https://www.educba.com/websocket-vs-socket-io/
 + https://libraries.io/bower/socket.io
-+ https://gist.github.com/anandgeorge/2814934
++ https://gist.github.com/anandgeorge/281493
++ https://github.com/neumino/thinky/tree/master/examples

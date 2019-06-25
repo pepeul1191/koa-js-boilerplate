@@ -18,7 +18,8 @@ router.get('/db/insert', async (ctx, next) => {
     title: 'Michel',
     content: 'hola mudo',
   });
-  demo.save().then(function(result) {
+  var x = 'XD';
+  await demo.save().then(function(result) {
     /*
     post = result = {
         id: "0e4a6f6f-cc0c-4aa5-951a-fcfc480dd05a",
@@ -31,14 +32,15 @@ router.get('/db/insert', async (ctx, next) => {
         }
     }
     */
-    console.log(result);
+    console.log(result.id);
     ctx.set('Content-Type', 'text/html');
-    ctx.body = 'xd1';
+    x = result.id;
+    console.log(x);
   }).error(function(res){
     console.log(res);
   });
   ctx.set('Content-Type', 'text/html');
-  ctx.body = 'xd2';
+  ctx.body = x;
 });
 
 exports.routes = router.middleware();

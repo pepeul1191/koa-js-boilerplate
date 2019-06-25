@@ -20,3 +20,4 @@ Fuentes:
 + https://libraries.io/bower/socket.io
 + https://gist.github.com/anandgeorge/281493
 + https://github.com/neumino/thinky/tree/master/examples
++ https://stackoverflow.com/questions/51187233/how-i-can-use-mongoose-and-koa-js

@@ -4,6 +4,10 @@ Instlación de dependencias:
 
     $ npm install
 
+Arrancar el servicio:
+
+    # rethinkdb --bind all --http-port 9090
+
 ---
 
 Fuentes:
@@ -21,3 +25,4 @@ Fuentes:
 + https://gist.github.com/anandgeorge/281493
 + https://github.com/neumino/thinky/tree/master/examples
 + https://stackoverflow.com/questions/51187233/how-i-can-use-mongoose-and-koa-js
++ https://github.com/pepeul1191/tutoriales/blob/master/RethinkDB.md

@@ -18,7 +18,7 @@ router.get('/db/insert', async (ctx, next) => {
     title: 'Michel',
     content: 'hola mudo',
   });
-  var x = 'XD';
+  var rpta;
   await demo.save().then(function(result) {
     /*
     post = result = {
@@ -34,13 +34,13 @@ router.get('/db/insert', async (ctx, next) => {
     */
     console.log(result.id);
     ctx.set('Content-Type', 'text/html');
-    x = result.id;
-    console.log(x);
+    rpta = result.id;
   }).error(function(res){
     console.log(res);
+    rpta = JSON.stringify(res);
   });
   ctx.set('Content-Type', 'text/html');
-  ctx.body = x;
+  ctx.body = rpta;
 });
 
 exports.routes = router.middleware();

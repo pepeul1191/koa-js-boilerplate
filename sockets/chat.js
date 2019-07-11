@@ -1,37 +1,20 @@
 const IO = require('koa-socket-2');
 
-const socket = new IO({
+const io = new IO({
   namespace: 'chat'
 });
 
-var nicknames = {};
-
-socket.on('connection', function (ctx, msg) {
-  console.log('a user connected -> ' + ctx.id);
+io.on('connection', function (socket) {
+  console.log('usuario conectado');
 });
 
-socket.on('nickname', function (nick, fn) {
-  if (nicknames[nick]) {
-    fn(true);
-  } else {
-    fn(false);
-    nicknames[nick] = socket.nickname = nick;
-    socket.broadcast.emit('announcement', nick + ' connected');
-    io.sockets.emit('nicknames', nicknames);
-  }
+io.on('chat message', function(ctx, data){
+  console.log(data);
+  ctx.socket.broadcast.emit('chat message', data);
 });
 
-socket.on('disconnect', function () {
-  if (!socket.nickname) return;
+io.on('disconnect', function () {
   console.log('usuario desconectado');
-  delete nicknames[socket.nickname];
-  socket.broadcast.emit('announcement', socket.nickname + ' disconnected');
-  socket.broadcast.emit('nicknames', nicknames);
 });
 
-socket.on('user message', function (ctx, msg) {
-  console.log(msg);
-  socket.broadcast('user message', socket.nickname, msg);
-});
-
-exports.socket = socket;
+exports.socket = io;

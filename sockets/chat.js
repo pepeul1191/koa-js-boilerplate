@@ -5,6 +5,7 @@ const io = new IO({
 });
 
 io.on('connection', function (socket) {
+  console.log(socket.data.handshake.query.user_id);
   console.log('usuario conectado');
 });
 

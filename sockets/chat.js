@@ -1,16 +1,11 @@
 const IO = require('koa-socket-2');
+var middleware = require('../configs/middlewares');
 
 const io = new IO({
   namespace: 'chat'
 });
 
-io.use(async ( ctx, next ) => {
-  console.log('++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(ctx.event);
-  if(false){
-    await next()
-  }
-})
+io.use(middleware.preResponseSocket);
 
 io.on('connection', function (ctx) {
   ctx.socket.emit('wellcome message', 'Bienvenido ' + ctx.data.handshake.query.user_id);

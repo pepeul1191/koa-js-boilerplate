@@ -4,7 +4,6 @@ function preResponse(){
   return async (ctx, next) => {
     ctx.set('Server', 'Ubuntu');
     ctx.set('X-Powered-By', 'Node.js');
-    console.log('+++++++++++++++++++++++++++++++++++++++++++');
     await next();
   }
 }
@@ -23,5 +22,13 @@ function showLogs(){
   }
 }
 
+async function preResponseSocket(ctx, next) {
+  console.log('preResponseSocket middleware dice: ' + ctx.event);
+  if(true){
+    await next()
+  }
+}
+
 exports.preResponse= preResponse;
 exports.showLogs = showLogs;
+exports.preResponseSocket = preResponseSocket;

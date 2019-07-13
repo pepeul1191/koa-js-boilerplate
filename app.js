@@ -3,10 +3,13 @@ const Koa = require('koa');
 const static = require('koa-static');
 const routes = require('koa-route');
 const render = require('koa-ejs');
+// export configs
 const sockets = require('./configs/sockets');
 var middleware = require('./configs/middlewares');
+// export routes
 const homeRouter =  require('./routes/home');
 const errorRouter =  require('./routes/error');
+const loginRouter =  require('./routes/login');
 // new app
 const app = new Koa();
 // views EJS
@@ -38,6 +41,7 @@ app.use(routes.get('/test', (ctx) => {
 }));
 app.use(homeRouter.routes);
 app.use(errorRouter.routes);
+app.use(loginRouter.routes);
 // error
 app.on('error', function (error) {
   console.log(error);

@@ -11,6 +11,7 @@
   "author": "Pepe Valdivia <jvaldivia@softweb.pe>",
   "license": "ISC",
   "dependencies": {
+    "js-yaml": "^3.13.1",
     "koa": "^2.6.2",
     "koa-ejs": "^4.2.0",
     "koa-route": "^3.2.0",

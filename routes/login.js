@@ -8,15 +8,16 @@ let router = new Router();
 
 router.get('/login', async (ctx, next) => {
   ctx.status = 200;
+  var lang = 'sp';
   var locals = {
     constants: constants.data,
     title: 'login',
     helpers: helpers,
     //csss: loginHelper.indexCss(),
     //jss: loginHelper.indexJs(),
-    numero: 8080,
-    //contents: loginContent.content,
-    //lang: middlewares.lang(req),
+    message: '',
+    contents: helpers.contents('login')[lang],
+    lang: lang,
   };
   await ctx.render('login/index', locals);
 });

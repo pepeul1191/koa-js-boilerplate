@@ -26,3 +26,4 @@ Fuentes:
 + https://github.com/neumino/thinky/tree/master/examples
 + https://stackoverflow.com/questions/51187233/how-i-can-use-mongoose-and-koa-js
 + https://github.com/pepeul1191/tutoriales/blob/master/RethinkDB.md
++ https://www.npmjs.com/package/js-yaml

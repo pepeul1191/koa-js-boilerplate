@@ -27,7 +27,7 @@ app.use(middleware.showLogs());
 sockets.registerApp(app);
 // static files
 app.use(static(__dirname + '/public'));
-// routes
+// plain routes
 const _r = {
   home: (ctx) => {
     ctx.set('Content-Type', 'text/html');
@@ -39,10 +39,11 @@ app.use(routes.get('/test', (ctx) => {
   ctx.set('Content-Type', 'text/html');
   ctx.body = 'ok';
 }));
+// forward routes
 app.use(homeRouter.routes);
 app.use(errorRouter.routes);
 app.use(loginRouter.routes);
-// error
+// error handler
 app.on('error', function (error) {
   console.log(error);
 })

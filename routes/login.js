@@ -1,6 +1,7 @@
 const Router = require('koa-trie-router');
 var constants = require('../configs/constants');
 var helpers = require('../configs/helpers');
+var contents = require('../configs/contents');
 var loginHelper = require('../helpers/login_helper');
 var models = require('../configs/models');
 
@@ -16,7 +17,7 @@ router.get('/login', async (ctx, next) => {
     csss: loginHelper.indexCss(),
     jss: loginHelper.indexJs(),
     message: '',
-    contents: helpers.contents('login')[lang],
+    contents: contents.get('login')[lang],
     lang: lang,
   };
   await ctx.render('login/index', locals);

@@ -1,6 +1,3 @@
-var yaml = require('js-yaml');
-var fs   = require('fs');
-const path = require('path');
 const constants = require('./constants');
 
 var loadCss = function(csss) {
@@ -25,11 +22,5 @@ var loadJs = function(jss) {
   return rpta;
 }
 
-var contents = function(file){
-  var file_route = path.join(__dirname, '../contents', file + '_content.yml');
-  return yaml.safeLoad(fs.readFileSync(file_route), 'utf8');
-}
-
 exports.loadCss = loadCss;
 exports.loadJs = loadJs;
-exports.contents = contents;

@@ -22,4 +22,36 @@ router.get('/login', async (ctx, next) => {
   await ctx.render('login/index', locals);
 });
 
+router.get('/login/sign_in', async (ctx, next) => {
+  ctx.status = 200;
+  var lang = 'sp';
+  var locals = {
+    constants: constants.data,
+    title: 'login',
+    helpers: helpers,
+    csss: loginHelper.indexCss(),
+    jss: loginHelper.indexJs(),
+    message: '',
+    contents: helpers.contents('login')[lang],
+    lang: lang,
+  };
+  await ctx.render('login/sign_in', locals);
+});
+
+router.get('/login/reset_password', async (ctx, next) => {
+  ctx.status = 200;
+  var lang = 'sp';
+  var locals = {
+    constants: constants.data,
+    title: 'login',
+    helpers: helpers,
+    csss: loginHelper.indexCss(),
+    jss: loginHelper.indexJs(),
+    message: '',
+    contents: helpers.contents('login')[lang],
+    lang: lang,
+  };
+  await ctx.render('login/reset_password', locals);
+});
+
 exports.routes = router.middleware();

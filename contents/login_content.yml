@@ -1,9 +1,13 @@
 sp:
   form_title: Iniciar Sesión
+  form_title_reset: Restablecer Contraseña
   placeholder_user: Usuario
   placeholder_password: Contraseña
-  button: Ingresar
+  placeholder_email: Correo Electrónico
+  button_login: Ingresar
+  button_reset: Enviar Contraseña
   sign_in: Registrarse
+  login: Ingresar
   reset: Olvidó su Contraseña
   status:
     email_pending: Activación por correo pendiente

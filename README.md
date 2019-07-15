@@ -27,6 +27,8 @@ Fuentes:
 + https://stackoverflow.com/questions/51187233/how-i-can-use-mongoose-and-koa-js
 + https://github.com/pepeul1191/tutoriales/blob/master/RethinkDB.md
 + https://www.npmjs.com/package/js-yaml
++ https://medium.com/trabe/the-elegance-of-asynchronous-middleware-chaining-in-koa-js-ea965f337e63
++ https://stackoverflow.com/questions/42964102/syntax-for-async-arrow-function
 
 Fuentes Template
 

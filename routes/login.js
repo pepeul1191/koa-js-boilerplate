@@ -3,11 +3,24 @@ var constants = require('../configs/constants');
 var helpers = require('../configs/helpers');
 var contents = require('../configs/contents');
 var loginHelper = require('../helpers/login_helper');
+var compose = require('koa-compose');
 var models = require('../configs/models');
 
 let router = new Router();
 
-router.get('/login', async (ctx, next) => {
+var x = async function (ctx, next) {
+  console.log('1 +++++++++++++++++++++++++++++++++++++');
+  if (!this.currentUser) {
+    console.log('2 +++++++++++++++++++++++++++++++++++++');
+    //this.redirect('/login');
+    // await;
+    return await ctx.redirect('/error/access/404');
+  }
+  console.log('3 +++++++++++++++++++++++++++++++++++++');
+  return await next();
+}
+
+router.get('/login', [x, async (ctx, next) => {
   ctx.status = 200;
   var lang = 'sp';
   var locals = {
@@ -21,7 +34,7 @@ router.get('/login', async (ctx, next) => {
     lang: lang,
   };
   await ctx.render('login/index', locals);
-});
+}]);
 
 router.get('/login/sign_in', async (ctx, next) => {
   ctx.status = 200;
@@ -37,7 +50,7 @@ router.get('/login/sign_in', async (ctx, next) => {
     lang: lang,
   };
   // await ctx.render('login/sign_in', locals);
-  ctx.redirect('/error/access/404');
+  await ctx.redirect('/error/access/404');
 });
 
 router.get('/login/reset_password', async (ctx, next) => {

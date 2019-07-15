@@ -2,7 +2,7 @@ var constants = require('./constants');
 
 // app middlewares
 
-function preResponse(){
+var preResponse = function(){
   return async (ctx, next) => {
     ctx.set('Server', 'Ubuntu');
     ctx.set('X-Powered-By', 'Node.js');
@@ -10,7 +10,7 @@ function preResponse(){
   }
 }
 
-function showLogs(){
+var showLogs = function(){
   if (constants.middlewares.logs){
     return async (ctx, next) => {
       await next();
@@ -26,7 +26,7 @@ function showLogs(){
 
 // action middlewares
 
-var sessionRequiredFalse = async function (ctx, next) {
+var sessionRequiredFalse = async function (ctx, next){
   if (constants.middlewares.session) {
     return await ctx.redirect('/error/access/404');
   }
@@ -35,7 +35,7 @@ var sessionRequiredFalse = async function (ctx, next) {
 
 // socket io middlewares
 
-async function preResponseSocket(ctx, next) {
+var preResponseSocket = async function (ctx, next){
   console.log('preResponseSocket middleware dice: ' + ctx.event);
   if(true){
     await next()

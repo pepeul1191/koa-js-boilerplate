@@ -13,7 +13,7 @@
   "dependencies": {
     "js-yaml": "^3.13.1",
     "koa": "^2.6.2",
-    "koa-compose": "^4.1.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-ejs": "^4.2.0",
     "koa-route": "^3.2.0",
     "koa-socket-2": "^1.1.0",

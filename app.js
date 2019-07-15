@@ -3,6 +3,7 @@ const Koa = require('koa');
 const static = require('koa-static');
 const routes = require('koa-route');
 const render = require('koa-ejs');
+const bodyParser = require('koa-bodyparser');
 // export configs
 const sockets = require('./configs/sockets');
 var middleware = require('./configs/middlewares');
@@ -12,6 +13,7 @@ const errorRouter =  require('./routes/error');
 const loginRouter =  require('./routes/login');
 // new app
 const app = new Koa();
+app.use(bodyParser());
 // views EJS
 render(app, {
   root: path.join(__dirname, 'views'),

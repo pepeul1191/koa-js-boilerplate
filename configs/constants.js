@@ -3,9 +3,6 @@ const data = {
   base_url: 'http://localhost:3000/',
   static_url: 'http://localhost:3000/',
   static: 'dev',
-  middleware_csrf : 'able',
-  middleware_session : 'disable',
-  middleware_logs : 'able',
   csrf: {
     secret: 'mpt/sr6eS2AlCRHU7DVThMgFTN08pnfSDf/C94eZx7udfm0lvgaYWLYJttYPKzGKDTlXwVU/d2FOxbKkgNlsTw==',
     key: 'csrf_val'
@@ -20,5 +17,12 @@ const services = {
   },
 }
 
+const middlewares = {
+  csrf : true,
+  session : false,
+  logs : true,
+}
+
 exports.data = data;
 exports.services = services;
+exports.middlewares = middlewares;

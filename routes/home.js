@@ -4,8 +4,12 @@ var models = require('../configs/models');
 let router = new Router();
 
 router.get('/', async (ctx, next) => {
-  ctx.set('Content-Type', 'text/html');
-  ctx.body = 'Hello';
+  ctx.status = 200;
+  var lang = 'sp';
+  var locals = {
+    lang: lang,
+  };
+  await ctx.render('home/index', locals);
 });
 
 router.get('/xd', async (ctx, next) => {

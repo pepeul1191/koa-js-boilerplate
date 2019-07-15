@@ -15,13 +15,13 @@ const services = {
     'csrf_key': 'csrf_val',
     'csrf_value': 'PKBcauXg6sTXz7Ddlty0nejVgoUodXL89KNxcrfwkEme0Huqtj6jjt4fP7v2uF4L',
   },
-}
+};
 
 const middlewares = {
   csrf : true,
   session : false,
   logs : true,
-}
+};
 
 exports.data = data;
 exports.services = services;

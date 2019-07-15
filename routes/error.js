@@ -6,7 +6,7 @@ var errorHelper = require('../helpers/error_helper');
 
 let router = new Router();
 
-router.get('/error/access/:num', 
+router.get('/error/access/:num', [
   async (ctx, next) => {
     ctx.status = 404;
     var lang = 'sp';
@@ -27,6 +27,6 @@ router.get('/error/access/:num',
     };
     await ctx.render('error/access', locals);
   }
-);
+]);
 
 exports.routes = router.middleware();

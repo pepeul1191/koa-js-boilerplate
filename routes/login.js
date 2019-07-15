@@ -49,7 +49,7 @@ router.post('/login', [
   }
 ]);
 
-router.get('/login/sign_in', 
+router.get('/login/sign_in', [
   async (ctx, next) => {
     ctx.status = 200;
     var lang = 'sp';
@@ -66,9 +66,9 @@ router.get('/login/sign_in',
     // await ctx.render('login/sign_in', locals);
     await ctx.redirect('/error/access/404');
   }
-);
+]);
 
-router.get('/login/reset_password', 
+router.get('/login/reset_password', [
   async (ctx, next) => {
     ctx.status = 200;
     var lang = 'sp';
@@ -84,6 +84,6 @@ router.get('/login/reset_password',
     };
     await ctx.render('login/reset_password', locals);
   }
-);
+]);
 
 exports.routes = router.middleware();

@@ -1,27 +1,38 @@
 const Router = require('koa-trie-router');
+var constants = require('../configs/constants');
 var models = require('../configs/models');
+var helpers = require('../configs/helpers');
+var contents = require('../configs/contents');
+var homeHelper = require('../helpers/home_helper');
 
 let router = new Router();
 
-router.get('/', 
+router.get('/', [
   async (ctx, next) => {
     ctx.status = 200;
     var lang = 'sp';
     var locals = {
+      constants: constants.data,
+      title: contents.titles()[lang]['home_index'],
+      helpers: helpers,
+      csss: homeHelper.indexCss(),
+      jss: homeHelper.indexJs(),
+      message: '',
+      contents: contents.get('home')[lang],
       lang: lang,
     };
     await ctx.render('home/index', locals);
   }
-);
+]);
 
-router.get('/xd', 
+router.get('/xd', [
   async (ctx, next) => {
     ctx.set('Content-Type', 'text/html');
     ctx.body = 'xd';
   }
-);
+]);
 
-router.get('/db/insert', 
+router.get('/db/insert', [
   async (ctx, next) => {
     var demo = new models.Test({
       title: 'Michel',
@@ -51,6 +62,6 @@ router.get('/db/insert',
     ctx.set('Content-Type', 'text/html');
     ctx.body = rpta;
   }
-);
+]);
 
 exports.routes = router.middleware();

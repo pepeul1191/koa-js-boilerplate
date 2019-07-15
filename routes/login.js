@@ -12,7 +12,7 @@ router.get('/login', async (ctx, next) => {
   var lang = 'sp';
   var locals = {
     constants: constants.data,
-    title: 'login',
+    title: contents.titles()[lang]['login_index'],
     helpers: helpers,
     csss: loginHelper.indexCss(),
     jss: loginHelper.indexJs(),
@@ -28,7 +28,7 @@ router.get('/login/sign_in', async (ctx, next) => {
   var lang = 'sp';
   var locals = {
     constants: constants.data,
-    title: 'login',
+    title: contents.titles()[lang]['login_sign_in'],
     helpers: helpers,
     csss: loginHelper.indexCss(),
     jss: loginHelper.indexJs(),
@@ -45,7 +45,7 @@ router.get('/login/reset_password', async (ctx, next) => {
   var lang = 'sp';
   var locals = {
     constants: constants.data,
-    title: 'login',
+    title: contents.titles()[lang]['login_reset'],
     helpers: helpers,
     csss: loginHelper.indexCss(),
     jss: loginHelper.indexJs(),

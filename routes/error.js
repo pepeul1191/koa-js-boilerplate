@@ -17,7 +17,7 @@ router.get('/error/access/:num', async (ctx, next) => {
   }
   var locals = {
     constants: constants.data,
-    title: 'Error',
+    title: contents.titles()[lang]['error'],
     helpers: helpers,
     csss: errorHelper.accessCss(),
     jss: errorHelper.accessJs(),

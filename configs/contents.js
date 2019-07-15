@@ -7,4 +7,10 @@ var get = function(file){
   return yaml.safeLoad(fs.readFileSync(file_route), 'utf8');
 }
 
+var titles = function(){
+  var file_route = path.join(__dirname, '../contents', '_titles.yml');
+  return yaml.safeLoad(fs.readFileSync(file_route), 'utf8');
+}
+
 exports.get = get;
+exports.titles = titles;

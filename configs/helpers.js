@@ -2,8 +2,6 @@ const constants = require('./constants');
 
 var loadCss = function(csss) {
   var rpta = '';
-  console.log(csss);
-  
   if (typeof csss != 'undefined'){
     for(var i = 0; i < csss.length; i++){
       rpta = rpta + '<link rel="stylesheet" type="text/css" href="'+ constants.data.static_url + csss[i] + '.css" />'

@@ -8,7 +8,7 @@ var accessCss = function() {
     rpta = [
       'bower_components/bootstrap/dist/css/bootstrap.min',
       'bower_components/font-awesome/css/font-awesome.min',
-      'competition/assets/css/constants',
+      'assets/css/constants',
       'assets/css/error',
     ];
   }

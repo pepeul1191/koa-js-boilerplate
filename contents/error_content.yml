@@ -1,0 +1,9 @@
+sp:
+  '404': 
+    number: 404
+    message: Archivo no encontrado
+    description: La página que busca no se encuentra en el servidor
+    icon: fa fa-exclamation-triangle
+    link_message: Ir al Inicio
+    link_icon: fa fa-home
+    link_url: ''

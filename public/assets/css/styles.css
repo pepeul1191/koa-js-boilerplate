@@ -1,0 +1,18 @@
+html {
+  font-size:0.75rem !important;
+}
+
+footer{
+  border-top: soild rgba(0,0,0,.5) 2px;
+  color: #FDFDFD;
+  margin-top: 25px;
+  background: var(--primary-color) !important;
+}
+
+.footer-copyright{
+  background: var(--secondary-color) !important;
+}
+
+footer > .container > .row > .col-md-3 > ul > li > a, .footer-copyright > b > a{
+  color: #FDFDFD;
+}

@@ -105,11 +105,11 @@ button{
 }
 
 h1 {
-  font-size: 20px !important;
+  font-size: 18px !important;
 }
 
 button, input[type=text], input[type=password] {
-  font-size: 14px !important;
+  font-size: 12px !important;
 }
 
 a, p {

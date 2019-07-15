@@ -2,8 +2,6 @@ var constants = require('../configs/constants');
 
 var accessCss = function() {
   var rpta = [];
-  console.log(constants.data);
-  
   if(constants.data.static == 'dev'){
     rpta = [
       'bower_components/bootstrap/dist/css/bootstrap.min',

@@ -4,9 +4,11 @@ const static = require('koa-static');
 const routes = require('koa-route');
 const render = require('koa-ejs');
 const bodyParser = require('koa-bodyparser');
+const session = require('koa-session');
 // export configs
 const sockets = require('./configs/sockets');
-var middlewares = require('./configs/middlewares');
+const middlewares = require('./configs/middlewares');
+const constants = require('./configs/constants');
 // export routes
 const homeRouter =  require('./routes/home');
 const errorRouter =  require('./routes/error');
@@ -14,7 +16,9 @@ const loginRouter =  require('./routes/login');
 const adminRouter =  require('./routes/admin');
 // new app
 const app = new Koa();
+app.keys = ['rnbfpzfuywmiwtfrrlomwlzlhdxfxjnfifzvkrloobswyoifkt'];
 app.use(bodyParser());
+app.use(session(constants.session, app));
 // views EJS
 render(app, {
   root: path.join(__dirname, 'views'),

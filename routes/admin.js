@@ -34,6 +34,9 @@ router.post('/admin/login', [
     var lang = middlewares.getLanguage(ctx);
     var message_status = '';
     ctx.status = 200;
+    console.log('1 ++++++++++++++++++++++++++');
+    console.log(ctx.session.admin_login);
+    console.log('2 ++++++++++++++++++++++++++');
     if(middlewares.CSRFValidateForm(ctx) != true){
       ctx.status = 500;
       message = contents.get('error')[lang].csrf.message_form;
@@ -41,7 +44,7 @@ router.post('/admin/login', [
     }
     if(constants.admin.user == ctx.request.body.user && 
       constants.admin.pass == ctx.request.body.pass){
-      // vamos a /admin
+      ctx.session.admin_login = true;
       return await ctx.redirect('/admin');
     }else{
       ctx.status = 500;
@@ -60,6 +63,13 @@ router.post('/admin/login', [
       lang: lang,
     };
     await ctx.render('admin/login', locals);
+  }
+]);
+
+router.get('/admin', [ 
+  async (ctx, next) => {
+    ctx.set('Content-Type', 'text/html');
+    ctx.body = 'admin';
   }
 ]);
 

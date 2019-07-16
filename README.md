@@ -12,6 +12,10 @@ Arrancar desarrollo de archivos estáticos con webpack:
 
     $ npm run src:dev
 
+Arrancar modo de desarrollo:
+
+    $ npm run start:dev & npm run src:dev
+
 ---
 
 Fuentes:

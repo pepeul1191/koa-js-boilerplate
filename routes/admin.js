@@ -69,6 +69,13 @@ router.post('/admin/login', [
 router.get('/admin', [ 
   middlewares.sessionAdminRequiredTrue, 
   async (ctx, next) => {
+    return await ctx.redirect('/admin/#/');
+  }
+]);
+
+router.get('/admin/', [ 
+  middlewares.sessionAdminRequiredTrue, 
+  async (ctx, next) => {
     ctx.status = 200;
     var lang = middlewares.getLanguage(ctx);
     var locals = {

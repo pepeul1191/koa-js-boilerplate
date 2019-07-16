@@ -60,7 +60,7 @@ var config = Object.assign({}, config,
     },
     devServer: {
       host: '0.0.0.0',
-      port: 8080,
+      port: 8085,
       contentBase: [
         path.join(__dirname, './public'),
         path.join(__dirname, './resources'),

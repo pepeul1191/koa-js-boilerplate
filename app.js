@@ -10,10 +10,11 @@ const sockets = require('./configs/sockets');
 const middlewares = require('./configs/middlewares');
 const constants = require('./configs/constants');
 // export routes
-const homeRouter =  require('./routes/home');
-const errorRouter =  require('./routes/error');
-const loginRouter =  require('./routes/login');
-const adminRouter =  require('./routes/admin');
+const homeRouter = require('./routes/home');
+const errorRouter = require('./routes/error');
+const loginRouter = require('./routes/login');
+const adminRouter = require('./routes/admin');
+const userRouter = require('./routes/user');
 // new app
 const app = new Koa();
 app.keys = ['rnbfpzfuywmiwtfrrlomwlzlhdxfxjnfifzvkrloobswyoifkt'];
@@ -51,6 +52,7 @@ app.use(homeRouter.routes);
 app.use(errorRouter.routes);
 app.use(loginRouter.routes);
 app.use(adminRouter.routes);
+app.use(userRouter.routes);
 // error handler
 app.use(middlewares.errorHandler);
 app.on('error', function (error) {

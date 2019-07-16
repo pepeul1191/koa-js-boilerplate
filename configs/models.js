@@ -1,19 +1,13 @@
-const database = require('./database');
+var db = require('./database');
 
-var type = database.db.type;
+var User = db.mongoose.model('users',
+  new db.Schema(
+    {
+      user:  String,
+      pass: String,
+      email: String,
+    }
+  )
+);
 
-var Test = database.db.createModel('tests', {
-  id: type.string(),
-  title: type.string(),
-  content: type.string(),
-});
-
-var User = database.db.createModel('users', {
-  id: type.string(),
-  user: type.string(),
-  pass: type.string(),
-  email: type.string(),
-});
-
-exports.Test = Test;
 exports.User = User;

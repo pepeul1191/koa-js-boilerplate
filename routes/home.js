@@ -3,6 +3,7 @@ var constants = require('../configs/constants');
 var models = require('../configs/models');
 var helpers = require('../configs/helpers');
 var contents = require('../configs/contents');
+var middlewares = require('../configs/middlewares');
 var homeHelper = require('../helpers/home_helper');
 
 let router = new Router();

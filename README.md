@@ -8,6 +8,10 @@ Arrancar el servicio:
 
     # rethinkdb --bind all --http-port 9090
 
+Arrancar desarrollo de archivos estáticos con webpack:
+
+    $ npm run src:dev
+
 ---
 
 Fuentes:

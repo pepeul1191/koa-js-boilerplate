@@ -70,8 +70,20 @@ router.post('/admin/login', [
 router.get('/admin', [ 
   middlewares.sessionAdminRequiredTrue, 
   async (ctx, next) => {
-    ctx.set('Content-Type', 'text/html');
-    ctx.body = 'admin';
+    ctx.status = 200;
+    var lang = middlewares.getLanguage(ctx);
+    var locals = {
+      constants: constants.data,
+      title: contents.titles()[lang]['admin_index'],
+      helpers: helpers,
+      csss: adminHelper.indexCss(),
+      jss: adminHelper.indexJs(),
+      message: '',
+      message_status: '',
+      contents: contents.get('admin')[lang],
+      lang: lang,
+    };
+    await ctx.render('admin/index', locals);
   }
 ]);
 

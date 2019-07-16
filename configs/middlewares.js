@@ -67,6 +67,24 @@ var sessionRequiredFalse = async function (ctx, next){
   return await next();
 }
 
+var sessionAdminRequiredFalse = async function (ctx, next){
+  if (constants.middlewares.session_admin) {
+    if(ctx.session.admin_login == true){
+      return await ctx.redirect('/admin');
+    }
+  }
+  return await next();
+}
+
+var sessionAdminRequiredTrue = async function (ctx, next){
+  if (constants.middlewares.session_admin) {
+    if(ctx.session.admin_login == false || typeof ctx.session.admin_login === 'undefined'){
+      return await ctx.redirect('/error/access/5051');
+    }
+  }
+  return await next();
+}
+
 var CSRFValidateForm = function (ctx){
   if (constants.middlewares.csrf_check) {
     var app_csrf_key = constants.data.csrf.key;
@@ -98,3 +116,5 @@ exports.sessionRequiredFalse = sessionRequiredFalse;
 exports.CSRFValidateForm = CSRFValidateForm;
 exports.errorHandler = errorHandler;
 exports.getLanguage = getLanguage;
+exports.sessionAdminRequiredFalse = sessionAdminRequiredFalse;
+exports.sessionAdminRequiredTrue = sessionAdminRequiredTrue;

@@ -29,6 +29,7 @@ router.get('/admin/login', [
 ]);
 
 router.post('/admin/login', [ 
+  middlewares.sessionAdminRequiredFalse, 
   async (ctx, next) => {
     var message = '';
     var lang = middlewares.getLanguage(ctx);
@@ -67,6 +68,7 @@ router.post('/admin/login', [
 ]);
 
 router.get('/admin', [ 
+  middlewares.sessionAdminRequiredTrue, 
   async (ctx, next) => {
     ctx.set('Content-Type', 'text/html');
     ctx.body = 'admin';

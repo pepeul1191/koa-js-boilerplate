@@ -34,6 +34,7 @@ const session = {
 const middlewares = {
   csrf : true,
   session : false,
+  session_admin : true,
   logs : true,
   csrf_check: true, 
 };

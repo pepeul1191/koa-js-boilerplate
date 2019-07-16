@@ -12,7 +12,7 @@ router.get('/error/access/:num', [
     ctx.status = 404;
     var lang = middlewares.getLanguage(ctx);
     var error_number = ctx.params.num;
-    var registered_errors = ['404', ];
+    var registered_errors = ['404', '5051'];
     // check if error content is not registered then, default error 404
     if (registered_errors.indexOf(error_number) == -1){
       error_number = '404';

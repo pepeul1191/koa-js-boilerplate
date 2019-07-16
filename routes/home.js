@@ -10,7 +10,7 @@ let router = new Router();
 router.get('/', [
   async (ctx, next) => {
     ctx.status = 200;
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var locals = {
       constants: constants.data,
       title: contents.titles()[lang]['home_index'],

@@ -12,7 +12,7 @@ router.get('/admin/login', [
   middlewares.sessionAdminRequiredFalse, 
   async (ctx, next) => {
     ctx.status = 200;
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var locals = {
       constants: constants.data,
       title: contents.titles()[lang]['admin_login'],
@@ -20,6 +20,7 @@ router.get('/admin/login', [
       csss: adminHelper.loginCss(),
       jss: adminHelper.loginJs(),
       message: '',
+      message_status: '',
       contents: contents.get('admin')[lang],
       lang: lang,
     };
@@ -30,7 +31,7 @@ router.get('/admin/login', [
 router.post('/admin/login', [ 
   async (ctx, next) => {
     var message = '';
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var message_status = '';
     ctx.status = 200;
     if(middlewares.CSRFValidateForm(ctx) != true){

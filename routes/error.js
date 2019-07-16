@@ -2,6 +2,7 @@ const Router = require('koa-trie-router');
 var constants = require('../configs/constants');
 var helpers = require('../configs/helpers');
 var contents = require('../configs/contents');
+var middlewares = require('../configs/middlewares');
 var errorHelper = require('../helpers/error_helper');
 
 let router = new Router();
@@ -9,7 +10,7 @@ let router = new Router();
 router.get('/error/access/:num', [
   async (ctx, next) => {
     ctx.status = 404;
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var error_number = ctx.params.num;
     var registered_errors = ['404', ];
     // check if error content is not registered then, default error 404

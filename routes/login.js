@@ -12,7 +12,7 @@ router.get('/login', [
   middlewares.sessionRequiredFalse, 
   async (ctx, next) => {
     ctx.status = 200;
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var locals = {
       constants: constants.data,
       title: contents.titles()[lang]['login_index'],
@@ -20,6 +20,7 @@ router.get('/login', [
       csss: loginHelper.indexCss(),
       jss: loginHelper.indexJs(),
       message: '',
+      message_status: '',
       contents: contents.get('login')[lang],
       lang: lang,
     };
@@ -34,7 +35,7 @@ router.post('/login', [
     console.log("1 +++++++++++++++++++++++++++++++");
     console.log(ctx.request.body);
     console.log("2 +++++++++++++++++++++++++++++++");
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var locals = {
       constants: constants.data,
       title: contents.titles()[lang]['login_index'],
@@ -42,6 +43,7 @@ router.post('/login', [
       csss: loginHelper.indexCss(),
       jss: loginHelper.indexJs(),
       message: '',
+      message_status: '',
       contents: contents.get('login')[lang],
       lang: lang,
     };
@@ -52,7 +54,7 @@ router.post('/login', [
 router.get('/login/sign_in', [
   async (ctx, next) => {
     ctx.status = 200;
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var locals = {
       constants: constants.data,
       title: contents.titles()[lang]['login_sign_in'],
@@ -60,6 +62,7 @@ router.get('/login/sign_in', [
       csss: loginHelper.indexCss(),
       jss: loginHelper.indexJs(),
       message: '',
+      message_status: '',
       contents: contents.get('login')[lang],
       lang: lang,
     };
@@ -71,7 +74,7 @@ router.get('/login/sign_in', [
 router.get('/login/reset_password', [
   async (ctx, next) => {
     ctx.status = 200;
-    var lang = 'sp';
+    var lang = middlewares.getLanguage(ctx);
     var locals = {
       constants: constants.data,
       title: contents.titles()[lang]['login_reset'],
@@ -79,6 +82,7 @@ router.get('/login/reset_password', [
       csss: loginHelper.indexCss(),
       jss: loginHelper.indexJs(),
       message: '',
+      message_status: '',
       contents: contents.get('login')[lang],
       lang: lang,
     };

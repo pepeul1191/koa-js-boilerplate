@@ -7,3 +7,5 @@ sp:
     link_message: Ir al Inicio
     link_icon: fa fa-home
     link_url: ''
+  csrf:
+    message_form: Valor CSRF no coincide

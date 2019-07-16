@@ -33,6 +33,21 @@ var sessionRequiredFalse = async function (ctx, next){
   return await next();
 }
 
+var CSRFValidateForm = function (ctx){
+  if (constants.middlewares.csrf_check) {
+    var app_csrf_key = constants.data.csrf.key;
+    var app_csrf_secret = constants.data.csrf.secret;
+    var rq_csrf_secret = ctx.request.body[app_csrf_key];
+    if(app_csrf_secret == rq_csrf_secret){
+      return true;        
+    }else{
+      return false;
+    }
+  }else{
+    return true;
+  }
+}
+
 // socket io middlewares
 
 var preResponseSocket = async function (ctx, next){
@@ -46,3 +61,4 @@ exports.preResponse= preResponse;
 exports.showLogs = showLogs;
 exports.preResponseSocket = preResponseSocket;
 exports.sessionRequiredFalse = sessionRequiredFalse;
+exports.CSRFValidateForm = CSRFValidateForm;

@@ -16,3 +16,34 @@ footer{
 footer > .container > .row > .col-md-3 > ul > li > a, .footer-copyright > b > a{
   color: #FDFDFD;
 }
+
+.link-disabled:hover {
+  cursor: not-allowed;
+}
+
+.color-error{
+  color: var(--error-color);
+}
+
+.color-warning{
+  color: var(--warning-color);
+}
+.color-success{
+  color: var(--success-color);
+}
+
+.btn-primary{
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-success{
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.btn-primary:hover{
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}

@@ -15,7 +15,7 @@
   <label for="inputPassword" class="sr-only">Password</label>
   <input type="password" id="inputPassword" class="form-control" placeholder="<%= contents.placeholder_password %>" required="" name="pass">
   <!--MESSAGE-->
-  <p class="color-error message" style="margin-top:10px;" id="login-message"><%= message %></p>
+  <p class="<%= message_status %> message" style="margin-top:10px;" id="login-message"><%= message %></p>
   <!--BUTTON -->
   <button class="btn btn-lg btn-primary btn-block" type="submit">
     <%= contents.button %>

@@ -21,8 +21,15 @@ const middlewares = {
   csrf : true,
   session : false,
   logs : true,
+  csrf_check: true, 
+};
+
+const admin = {
+  user: 'admin',
+  pass: 'sistema123'
 };
 
 exports.data = data;
 exports.services = services;
 exports.middlewares = middlewares;
+exports.admin = admin;

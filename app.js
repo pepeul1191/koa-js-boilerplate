@@ -11,6 +11,7 @@ var middleware = require('./configs/middlewares');
 const homeRouter =  require('./routes/home');
 const errorRouter =  require('./routes/error');
 const loginRouter =  require('./routes/login');
+const adminRouter =  require('./routes/admin');
 // new app
 const app = new Koa();
 app.use(bodyParser());
@@ -45,6 +46,7 @@ app.use(routes.get('/test', (ctx) => {
 app.use(homeRouter.routes);
 app.use(errorRouter.routes);
 app.use(loginRouter.routes);
+app.use(adminRouter.routes);
 // error handler
 app.on('error', function (error) {
   console.log(error);

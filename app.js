@@ -6,7 +6,7 @@ const render = require('koa-ejs');
 const bodyParser = require('koa-bodyparser');
 // export configs
 const sockets = require('./configs/sockets');
-var middleware = require('./configs/middlewares');
+var middlewares = require('./configs/middlewares');
 // export routes
 const homeRouter =  require('./routes/home');
 const errorRouter =  require('./routes/error');
@@ -24,8 +24,8 @@ render(app, {
   debug: false
 });
 // middlewares
-app.use(middleware.preResponse());
-app.use(middleware.showLogs());
+app.use(middlewares.preResponse());
+app.use(middlewares.showLogs());
 // sockets
 sockets.registerApp(app);
 // static files
@@ -48,6 +48,7 @@ app.use(errorRouter.routes);
 app.use(loginRouter.routes);
 app.use(adminRouter.routes);
 // error handler
+app.use(middlewares.errorHandler);
 app.on('error', function (error) {
   console.log(error);
 })

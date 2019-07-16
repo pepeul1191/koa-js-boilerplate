@@ -1,4 +1,5 @@
 var constants = require('./constants');
+var contents = require('./contents');
 
 // app middlewares
 
@@ -21,6 +22,39 @@ var showLogs = function(){
     return async (ctx, next) => {
       await next();
     };
+  }
+}
+
+var getLanguage = function(ctx){
+  return 'sp';
+}
+
+var errorHandler = async function (ctx, next){
+  var lang = getLanguage(ctx);
+  try {
+    await next();
+    const status = ctx.status || 404;
+    if (status === 404) {
+      ctx.throw(404);
+    }
+  } catch (err) {
+    ctx.status = err.status || 500;
+    if (ctx.status === 404) {
+      if (ctx.method == 'GET'){
+        var static_extensions = ['css', 'js', 'png', 'jpg', ];
+        var resource = `${ctx.method} ${ctx.status} ${ctx.url}`;
+        resource = resource.split('.');
+        if(static_extensions.indexOf(resource[resource.length - 1]) == -1){
+          await ctx.redirect('/error/access/404');
+        }
+      }else{ 
+        ctx.set('Content-Type', 'text/html');
+        ctx.status = 404;
+        ctx.body = contents.get('error')[lang].error_handler.post_404;
+      }
+    } else {
+      await ctx.render('other_error');
+    }
   }
 }
 
@@ -62,3 +96,5 @@ exports.showLogs = showLogs;
 exports.preResponseSocket = preResponseSocket;
 exports.sessionRequiredFalse = sessionRequiredFalse;
 exports.CSRFValidateForm = CSRFValidateForm;
+exports.errorHandler = errorHandler;
+exports.getLanguage = getLanguage;

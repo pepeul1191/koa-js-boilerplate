@@ -9,3 +9,5 @@ sp:
     link_url: ''
   csrf:
     message_form: Valor CSRF no coincide
+  error_handler:
+    post_404: Recurso no encontrado  

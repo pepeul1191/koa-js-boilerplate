@@ -40,7 +40,7 @@ var indexCss = function() {
       'bower_components/font-awesome/css/font-awesome.min',
       'assets/css/constants',
       'assets/css/styles',
-      'assets/css/index',
+      'assets/css/admin',
     ];
   }
   if(constants.data.static == 'produccion'){

@@ -47,3 +47,7 @@ footer > .container > .row > .col-md-3 > ul > li > a, .footer-copyright > b > a{
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);
 }
+
+.btn, .form-control{
+  border-radius: 0px;
+}

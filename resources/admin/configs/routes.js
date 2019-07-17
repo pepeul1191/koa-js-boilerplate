@@ -1,9 +1,14 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
+import 'bootstrap';
+import 'popper.js';
+
+import UserListView from '../views/user_list_view';
+import UserDetailView from '../views/user_detail_view';
 
 var router = Backbone.Router.extend({
   userListView: null,
-  userView: null,
+  userDetailView: null,
   initialize: function() {
   },
   routes: {
@@ -15,21 +20,21 @@ var router = Backbone.Router.extend({
     '*actions' : 'default',
   },
   index: function(){
-    alert('index');
+    if(this.userListView == null){
+      this.userListView = new UserListView();
+    }
+    this.userListView.render();
+    //this.userListView.tableSystem.listar();
   },
   default: function() {
     //window.location.href = BASE_URL + "error/access/404";
     window.location.href = BASE_URL + 'admin/#/';
   },
   userCreate: function(){
-    /*
-    if(this.systemView == null){
-      this.systemView = new SystemView();
+    if(this.userDetailView == null){
+      this.userDetailView = new UserDetailView();
     }
-    this.systemView.render();
-    this.systemView.tableSystem.listar();
-    */
-    alert('create');
+    this.userDetailView.renderCreate();
   },
   userEdit: function(id){
     /*

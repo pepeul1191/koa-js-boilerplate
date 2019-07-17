@@ -5,7 +5,7 @@ import UserDetailTemplate from '../templates/user_detail_template';
 import UserService from '../services/user_service';
 
 var UserListView = Backbone.View.extend({
-	el: '#workspace',
+	el: '#modal-container',
 	initialize: function(){
 		//this.render();
     //console.log("initialize");
@@ -13,32 +13,46 @@ var UserListView = Backbone.View.extend({
 		this.message = "#mensaje";
 		this.events = this.events || {};
 		//this.model = new User();
-		this.modalButton = $("#btnModal");
-		this.modalContainer = $("#modal-container");
+		this.modalButton = $('#btnModal');
+		this.modalContainer = $('#modal-container');
 		//this.tableUserLog = new TableView(dataTableUserLog);
 	},
 	events: {
-    "click #btnBuscarUsuario": "buscarUsuario",
-		"click #btnGenerarUsuario": "generarCorrelativo",
-		"click #btnCrearUsuario": "crearUsuario",
-		"click #btnActualizarCorreo": "actualizarCorreo",
-		"click #btnCambiarContrasenia": "cambiarContrasenia",
-		"click #btnReenviarActivacion": "reenviarActivacion",
-		"click #btnActualizarEstado": "actualizarEstado",
-		"click #btnAsociarSistemasUsuarioNuevo": "asociarSistemasUsuarioNuevo",
-		"click #btnVerLogs": "verLogs",
-		"click #btnVerSistemas": "verSistemas",
-		"click #btnVerRolesPermisos": "verRolesPermisos",
+		'click .close-modal': 'closeModal',
+		'keydown' : 'keydownHandler',
   },
   renderCreate: function(){
+		this.modalButton.click();
     $(this.el).html(
       UserDetailTemplate({
         title: 'Crear Usuario',
         base_url: BASE_URL,
         user: {},
-      }))
-    ;
-  },
+			})
+		);
+		// show modal
+		$('body').addClass('modal-open');
+		$('.modal-backdrop').removeClass('d-none');
+		this.modalContainer.removeClass('d-none');
+		// focus modal
+		$('#txtUser').focus();
+	},
+	closeModal: function(){
+		// hide modal
+  	$('body').removeClass('modal-open');
+		$('.modal-backdrop').addClass('d-none');
+		this.modalContainer.addClass('d-none');
+		// redirect
+		window.location.href = BASE_URL + 'admin/#/';
+	},
+	keydownHandler : function(e){
+		switch (e.which) {
+			// esc
+			case 27 :
+				this.closeModal();
+				break;
+		}
+	},
 });
 
 export default UserListView;

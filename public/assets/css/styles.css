@@ -48,6 +48,6 @@ footer > .container > .row > .col-md-3 > ul > li > a, .footer-copyright > b > a{
   border-color: var(--secondary-color);
 }
 
-.btn, .form-control{
+.btn, .form-control, .modal-content{
   border-radius: 0px;
 }

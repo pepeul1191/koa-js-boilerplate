@@ -52,6 +52,35 @@ var UserListTemplate = _.template(`
         </tfoot>
       </table>
     </div>
+    <div class="col-md-6">
+      <h3 class="page-tittle">Criterios de Búsqueda</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="user">Usuario</label>
+            <input type="text" class="form-control" id="user" aria-describedby="userHelp" placeholder="Ingrese usuario">
+            <small id="userHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="pass">Correo</label>
+            <input type="text" class="form-control" id="pass" aria-describedby="passHelp" placeholder="Ingrese Correo">
+            <small id="passHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+        </div>
+      </div>
+      <div class="row>
+        <div class="col-md-3 offset-md-9c">
+          <div class="form-group pull-right">
+            <button class="btn btn-primary"> 
+              <i class="fa fa-search btn-icon" aria-hidden="true"></i>
+              Buscar Usuarios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 `);
 

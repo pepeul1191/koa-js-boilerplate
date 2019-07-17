@@ -16,6 +16,14 @@ Arrancar modo de desarrollo la aplicación web:
 
     $ npm run start:dev
 
+### Comandos backup de MongoDB
+
+    $ mongodump --db chat_db --host localhost --port 27017 --out db
+
+### Comandos restore de MongoDB
+
+    $ mongorestore --db chat_db --host localhost --port 27017 db/chat_db
+
 ---
 
 Fuentes:

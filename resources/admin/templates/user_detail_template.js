@@ -34,7 +34,7 @@ var UserDetailTemplate = _.template(`
     </div>
   </div>
   <div class="row>
-    <div class="col-md-3 offset-md-9">
+    <div class="col-md-3 offset-md-9c">
       <div class="form-group">
         <button class="btn btn-primary"> 
           <i class="fa fa-check btn-icon" aria-hidden="true"></i>

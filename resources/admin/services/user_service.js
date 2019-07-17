@@ -1,12 +1,18 @@
 import $ from 'jquery';
 
 var UserService = {
-  list: function(){
-    var resp = {status: 200, message: ''};
+  list: function(page, step){
+    var resp = {
+      status: 200, 
+      message: ''
+    };
     $.ajax({
       type: 'GET',
       url: BASE_URL + 'user/list',
-      data: { },
+      data: { 
+        step: step,
+        page: page,
+      },
       headers: {
         [CSRF_KEY]: CSRF,
       },

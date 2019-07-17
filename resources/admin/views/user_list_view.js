@@ -7,38 +7,82 @@ import UserService from '../services/user_service';
 var UserListView = Backbone.View.extend({
 	el: '#workspace',
 	initialize: function(){
-		//this.render();
-    //console.log("initialize");
     this.userService = UserService;
-		this.message = "#mensaje";
+		this.message = '#mensaje';
 		this.events = this.events || {};
-		//this.model = new User();
-		this.modalButton = $("#btnModal");
-		this.modalContainer = $("#modal-container");
-		//this.tableUserLog = new TableView(dataTableUserLog);
+		this.page_size = 10;
+		this.page = 1;
+		this.pages = 0;
 	},
 	events: {
-    "click #btnBuscarUsuario": "buscarUsuario",
-		"click #btnGenerarUsuario": "generarCorrelativo",
-		"click #btnCrearUsuario": "crearUsuario",
-		"click #btnActualizarCorreo": "actualizarCorreo",
-		"click #btnCambiarContrasenia": "cambiarContrasenia",
-		"click #btnReenviarActivacion": "reenviarActivacion",
-		"click #btnActualizarEstado": "actualizarEstado",
-		"click #btnAsociarSistemasUsuarioNuevo": "asociarSistemasUsuarioNuevo",
-		"click #btnVerLogs": "verLogs",
-		"click #btnVerSistemas": "verSistemas",
-		"click #btnVerRolesPermisos": "verRolesPermisos",
+		'click #btnGoBegin': 'goBegin',
+		'click #btnGoPrevious': 'goPrevious',
+		'click #btnGoNext': 'goNext',
+		'click #btnGoLast': 'goLast',
   },
   render: function(){
-    var resp = this.userService.list();
+		var resp = this.userService.list(this.page, this.page_size);
+		this.pages = Math.ceil(resp.message.count / this.page_size);
     $(this.el).html(
       UserListTemplate({
-        users: resp.message,
-        base_url: BASE_URL,
-      }))
-    ;
-  },
+        users: resp.message.users,
+				base_url: BASE_URL,
+				page: this.page,
+				pages: this.pages,
+			})
+		);
+	},
+	goBegin: function(){
+		this.page = 1;
+		var resp = this.userService.list(this.page, this.page_size);
+		this.pages = Math.ceil(resp.message.count / this.page_size);
+    $(this.el).html(
+      UserListTemplate({
+        users: resp.message.users,
+				base_url: BASE_URL,
+				page: this.page,
+				pages: this.pages,
+			})
+		);
+	},
+	goPrevious: function(){
+		this.page = this.page - 1;
+		var resp = this.userService.list(this.page, this.page_size);
+		this.pages = Math.ceil(resp.message.count / this.page_size);
+    $(this.el).html(
+      UserListTemplate({
+        users: resp.message.users,
+				base_url: BASE_URL,
+				page: this.page,
+				pages: this.pages,
+			})
+		);
+	},
+	goNext: function(){
+		this.page = this.page + 1;
+		var resp = this.userService.list(this.page, this.page_size);
+		this.pages = Math.ceil(resp.message.count / this.page_size);
+    $(this.el).html(
+      UserListTemplate({
+        users: resp.message.users,
+				base_url: BASE_URL,
+				page: this.page,
+				pages: this.pages,
+			})
+		);
+	},
+	goLast: function(){
+		this.page = this.pages;
+		var resp = this.userService.list(this.page, this.page_size);
+    $(this.el).html(
+      UserListTemplate({
+        users: resp.message.users,
+				base_url: BASE_URL,
+				page: this.page,
+				pages: this.pages,
+			})
+		);
+	},
 });
 
 export default UserListView;

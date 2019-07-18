@@ -29,7 +29,7 @@ var getLanguage = function(ctx){
   return 'sp';
 }
 
-var errorHandler = async function (ctx, next){
+var errorNotFoundHandler = async function (ctx, next){
   var lang = getLanguage(ctx);
   try {
     await next();
@@ -38,6 +38,7 @@ var errorHandler = async function (ctx, next){
       ctx.throw(404);
     }
   } catch (err) {
+    // console.log('ERRORR!!!!!!!!!!!!');
     ctx.status = err.status || 500;
     if (ctx.status === 404) {
       if (ctx.method == 'GET'){
@@ -114,7 +115,7 @@ exports.showLogs = showLogs;
 exports.preResponseSocket = preResponseSocket;
 exports.sessionRequiredFalse = sessionRequiredFalse;
 exports.CSRFValidateForm = CSRFValidateForm;
-exports.errorHandler = errorHandler;
+exports.errorNotFoundHandler = errorNotFoundHandler;
 exports.getLanguage = getLanguage;
 exports.sessionAdminRequiredFalse = sessionAdminRequiredFalse;
 exports.sessionAdminRequiredTrue = sessionAdminRequiredTrue;

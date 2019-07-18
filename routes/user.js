@@ -62,13 +62,13 @@ router.get('/user/list', [
 router.post('/user/picture/upload', [
   //middlewares.sessionRequiredFalse, 
   async (ctx, next) => {
-    const {path, name, type} = ctx.request.files.picture_file;
-    const fileExtension = mime.extension(type);
     try {
+      const {path, name, type} = ctx.request.files.picture_file;
+      const fileExtension = mime.extension(type);
       await fs.copy(path, `public/uploads/${name}`);
       console.log('success!')
     } catch (err) {
-      console.error(err)
+      ctx.throw(500, err);
     }
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = 200;

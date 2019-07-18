@@ -59,3 +59,7 @@ footer > .container > .row > .col-md-3 > ul > li > a, .footer-copyright > b > a{
 .custom-file{
   width: 75%;
 }
+
+.small, small {
+  font-size: 85%;
+}

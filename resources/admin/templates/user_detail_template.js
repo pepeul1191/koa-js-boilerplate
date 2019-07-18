@@ -18,28 +18,28 @@ var UserDetailTemplate = _.template(`
           <div class="form-group">
             <label for="txtUser">Usuario</label>
             <input type="text" class="form-control" id="txtUser" aria-describedby="txtUserHelp" placeholder="Ingrese usuario">
-            <small id="txtUserHelp" class="form-text text-muted"></small>
+            <small id="txtUserHelp" class="form-text"></small>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="txtEmail">Correo Electrónico</label>
             <input type="email" class="form-control" id="txtEmail" aria-describedby="txtEmailHelp" placeholder="Ingrese correo">
-            <small id="txtEmailHelp" class="form-text text-muted"></small>
+            <small id="txtEmailHelp" class="form-text"></small>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="txtPass">Contraseña</label>
             <input type="password" class="form-control" id="txtPass" aria-describedby="txtPassHelp" placeholder="Ingrese contraseña">
-            <small id="txtPassHelp" class="form-text text-muted"></small>
+            <small id="txtPassHelp" class="form-text"></small>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="txtPassRepeat">Confirme Contraseña</label>
             <input type="password" class="form-control" id="txtPassRepeat" aria-describedby="txtPassRepeatHelp" placeholder="Reingrese contraseña">
-            <small id="txtPassRepeatHelp" class="form-text text-muted"></small>
+            <small id="txtPassRepeatHelp" class="form-text"></small>
           </div>
         </div>
         <div class="col-md-8">
@@ -53,7 +53,7 @@ var UserDetailTemplate = _.template(`
               <i class="fa fa-upload btn-icon" aria-hidden="true"></i>
               Subir
             </button>
-            <small id="txtPictureHelp" class="form-text text-muted"></small>
+            <small id="txtPictureHelp" class="form-text"></small>
           </div>
         </div>
         <div class="col-md-4">

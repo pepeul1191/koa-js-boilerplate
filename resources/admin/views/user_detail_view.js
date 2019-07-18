@@ -57,7 +57,7 @@ var UserListView = Backbone.View.extend({
 		// focus modal
 		$('#txtUser').focus();
 		// set id 'E' for new User
-		this.user.id = 'E';
+		this.user.set('id',  'E');
 	},
 	closeModal: function(){
 		// hide modal
@@ -115,39 +115,21 @@ var UserListView = Backbone.View.extend({
 		}
 	},
 	uploadPicture: function(){
-		var formData = new FormData();
+		$(this.txtPictureHelp).html('Subiendo arhcivo...');
+		var form_data = new FormData();
 		var file = $(this.filePicture)[0].files[0];
-		formData.append('picture_file', file);
-		formData.append('demo', 'XD');
-		$.ajax({
-			type: 'POST',
-			url: BASE_URL + 'user/picture/upload',
-			headers: {
-				[CSRF_KEY]: CSRF,
-			},
-			data: formData,
-			//use contentType, processData for sure.
-			contentType: false,
-			processData: false,
-			beforeSend: function() {
-				//$("#" + viewInstance.subirBtnId).attr("disabled", "true");
-				//$("#" + viewInstance.lblMensaje).html("Subiendo");
-			},
-			success: function(data) {
-				var data = JSON.parse(data);
-				//$("#" + viewInstance.lblMensaje).html(viewInstance.mensajes["success"]);
-				//$("#" + viewInstance.subirBtnId).removeAttr("disabled");
-				//$("#" + viewInstance.verBtnId).attr("href", data["mensaje"][2]);
-				//$("#" + viewInstance.lblMensaje).removeClass("color-danger");
-				//$("#" + viewInstance.lblMensaje).removeClass("color-warning");
-				//$("#" + viewInstance.lblMensaje).addClass("color-success");
-				//$("#" + viewInstance.verBtnId).attr("disabled", false);
-			},
-			error: function(error) {
-				console.log(error);
-				//$("#" + viewInstance.subirBtnId).removeAttr("disabled");
-			}
-		});
+		form_data.append('picture_file', file);
+		var resp = this.userService.upload(form_data);
+    if (resp.status == 200){
+			$(this.txtPictureHelp).removeClass('text-danger');
+			$(this.txtPictureHelp).addClass('text-success');
+			$(this.txtPictureHelp).html('Imagen cargada correctamente');
+			this.user.set('profile_picture', resp.message);
+		}else{
+			$(this.txtPictureHelp).removeClass('text-success');
+			$(this.txtPictureHelp).addClass('text-danger');
+			$(this.txtPictureHelp).html('Ha ocurrido un error en cargar la imagen');
+		}
 	},
 });
 

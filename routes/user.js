@@ -62,17 +62,19 @@ router.get('/user/list', [
 router.post('/user/picture/upload', [
   //middlewares.sessionRequiredFalse, 
   async (ctx, next) => {
+    var resp = '';
     try {
-      const {path, name, type} = ctx.request.files.picture_file;
-      const fileExtension = mime.extension(type);
+      var {path, name, type} = ctx.request.files.picture_file;
+      var file_extension = mime.extension(type);
+      name = helpers.random(30) + '.' + file_extension;
       await fs.copy(path, `public/uploads/${name}`);
-      console.log('success!')
+      resp = name;
     } catch (err) {
       ctx.throw(500, err);
     }
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = 200;
-    ctx.body = 'XD';
+    ctx.body = resp;
   }
 ]);
 

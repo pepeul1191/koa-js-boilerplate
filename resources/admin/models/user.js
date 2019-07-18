@@ -6,6 +6,7 @@ var User = Backbone.Model.extend({
     user: '',
     pass: '',
     email: '',
+    profile_picture: '',
   },
   initialize: function() {
   },

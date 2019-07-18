@@ -55,6 +55,35 @@ var UserService = {
     });
     return resp;
   },
+  upload: function(form_data){
+    var resp = {
+      status: 200, 
+      message: ''
+    };
+    $.ajax({
+			type: 'POST',
+			url: BASE_URL + 'user/picture/upload',
+			headers: {
+				[CSRF_KEY]: CSRF,
+			},
+			data: form_data,
+			//use contentType, processData for sure.
+			contentType: false,
+      processData: false,
+      async: false,
+			beforeSend: function() {
+			},
+			success: function(data) {
+				resp.message = data;
+			},
+			error: function(xhr, status, error){
+        console.error(xhr.responseText);
+        resp.status = xhr.status;
+        resp.message = xhr.responseText;
+			}
+    });
+    return resp;
+  }
 };
 
 export default UserService;

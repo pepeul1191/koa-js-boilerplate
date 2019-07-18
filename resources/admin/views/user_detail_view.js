@@ -97,17 +97,32 @@ var UserListView = Backbone.View.extend({
 	},
 	validateFillForm: function(){
 		var validation_pass = true;
+		// txtUser is fill
 		if($(this.txtUser).val() == ''){
 			validation_pass == false;
 		}
+		// txtEmail is fill
 		if($(this.txtEmail).val() == ''){
 			
+		}else{
+
 		}
+		// txtEmail is email
+
+		// txtPass is fill
 		if($(this.txtPass).val() == ''){
 			
 		}
+		// txtPass and txtPassRepeat are equals
 		if($(this.txtPass).val() != $(this.txtPassRepeat).val()){
-			
+			validation_pass = false;
+			$(this.txtPassRepeatHelp).html('Contraseñas deben ser iguales');
+			$(this.txtPassRepeatHelp).removeClass('text-success');
+			$(this.txtPassRepeatHelp).addClass('text-danger');
+		}else{
+			$(this.txtPassRepeatHelp).html('');
+			$(this.txtPassRepeatHelp).addClass('text-success');
+			$(this.txtPassRepeatHelp).removeClass('text-danger');
 		}
 		// check validation pass
 		if(validation_pass == false){
@@ -125,6 +140,7 @@ var UserListView = Backbone.View.extend({
 			$(this.txtPictureHelp).addClass('text-success');
 			$(this.txtPictureHelp).html('Imagen cargada correctamente');
 			this.user.set('profile_picture', resp.message);
+			$(this.imgPicture).attr('src', STATICS_URL + 'uploads/' + this.user.get('profile_picture'));
 		}else{
 			$(this.txtPictureHelp).removeClass('text-success');
 			$(this.txtPictureHelp).addClass('text-danger');

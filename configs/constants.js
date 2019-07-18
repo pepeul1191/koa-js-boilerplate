@@ -46,7 +46,8 @@ const admin = {
 
 const uploader_options = {
   multipart: true, 
-  uploadDir: '.'
+  uploadDir: '.',
+  urlencoded: true,
 };
 
 exports.data = data;

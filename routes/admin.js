@@ -30,6 +30,7 @@ router.get('/admin/login', [
 router.post('/admin/login', [ 
   middlewares.sessionAdminRequiredFalse, 
   async (ctx, next) => {
+    console.log('0 +++++++++++++++++++++++++++');
     var message = '';
     var lang = middlewares.getLanguage(ctx);
     var message_status = '';

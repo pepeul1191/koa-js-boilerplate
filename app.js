@@ -1,9 +1,7 @@
 const path = require('path');
 const Koa = require('koa');
 const static = require('koa-static');
-const routes = require('koa-route');
 const render = require('koa-ejs');
-const bodyParser = require('koa-bodyparser');
 const session = require('koa-session');
 const koaBody = require('koa-body');
 // export configs
@@ -19,7 +17,6 @@ const userRouter = require('./routes/user');
 // new app
 const app = new Koa();
 app.keys = ['rnbfpzfuywmiwtfrrlomwlzlhdxfxjnfifzvkrloobswyoifkt'];
-app.use(bodyParser());
 app.use(session(constants.session, app));
 app.use(koaBody(constants.uploader_options));
 // views EJS

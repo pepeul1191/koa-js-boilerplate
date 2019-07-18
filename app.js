@@ -37,29 +37,9 @@ app.use(middlewares.showLogs());
 sockets.registerApp(app);
 // static files
 app.use(static(__dirname + '/public'));
-// plain routes
-const _r = {
-  home: (ctx) => {
-    ctx.set('Content-Type', 'text/html');
-    ctx.body = '<h1>petsss</h1>';
-  },
-};
-app.use(routes.get('/home', _r.home));
-app.use(routes.get('/test', (ctx) => {
-  ctx.set('Content-Type', 'text/html');
-  ctx.body = 'ok';
-}));
+// error 500 handler
+app.use(middlewares.internalErrorHandler);
 // forward routes
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    ctx.status = 500; //err.status || 500;
-    console.log(err);
-    console.log(err.stack);
-    ctx.body = err.stack;
-  }
-});
 app.use(homeRouter.routes);
 app.use(errorRouter.routes);
 app.use(loginRouter.routes);
@@ -67,32 +47,5 @@ app.use(adminRouter.routes);
 app.use(userRouter.routes);
 // error 404 handler
 app.use(middlewares.errorNotFoundHandler);
-/*
-app.on('error', function (error) {
-  console.log('1 ++++++++++++++++++++++')
-  console.log(error);
-  console.log('2 ++++++++++++++++++++++')
-  ctx.set('Content-Type', 'text/html; charset=utf-8');
-  ctx.status = 500;
-  ctx.body = error;
-})
-*/
-
-
-/*
-app.on('error', async (err, ctx, next) => {
-  console.log('1++++++++++++++++++++++++++++++++++++');
-  ctx.set('Content-Type', 'text/html; charset=utf-8');
-  ctx.status = 200;
-  console.log(err.toString());
-  console.log('2++++++++++++++++++++++++++++++++++++');
-  //ctx.body = err.toString();
-  console.log(ctx.body);
-  console.log('3++++++++++++++++++++++++++++++++++++');
-  //ctx.app.emit('error', err, ctx);
-  return await ctx.render('error/500');
-  console.log('4++++++++++++++++++++++++++++++++++++');
-});
-*/
 // port
 app.listen(3000);

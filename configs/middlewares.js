@@ -59,6 +59,17 @@ var errorNotFoundHandler = async function (ctx, next){
   }
 }
 
+var internalErrorHandler = async function (ctx, next){
+  try {
+    await next();
+  } catch (err) {
+    console.log(err);
+    ctx.set('Content-Type', 'text/html');
+    ctx.status = 500; //err.status || 500;
+    ctx.body = err.stack;
+  }
+}
+
 // action middlewares
 
 var sessionRequiredFalse = async function (ctx, next){
@@ -119,3 +130,4 @@ exports.errorNotFoundHandler = errorNotFoundHandler;
 exports.getLanguage = getLanguage;
 exports.sessionAdminRequiredFalse = sessionAdminRequiredFalse;
 exports.sessionAdminRequiredTrue = sessionAdminRequiredTrue;
+exports.internalErrorHandler = internalErrorHandler;

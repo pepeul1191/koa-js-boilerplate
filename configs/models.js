@@ -6,6 +6,7 @@ var User = db.mongoose.model('users',
       user:  String,
       pass: String,
       email: String,
+      profile_picture_url: String,
     }
   )
 );

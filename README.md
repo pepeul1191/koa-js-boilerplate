@@ -46,6 +46,7 @@ Fuentes:
 + https://medium.com/trabe/the-elegance-of-asynchronous-middleware-chaining-in-koa-js-ea965f337e63
 + https://stackoverflow.com/questions/42964102/syntax-for-async-arrow-function
 + https://github.com/koajs/session
++ https://stackoverflow.com/questions/55872109/how-to-upload-file-using-koa
 
 Fuentes Template
 

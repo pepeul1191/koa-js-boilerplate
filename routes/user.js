@@ -1,4 +1,6 @@
 const Router = require('koa-trie-router');
+const mime = require('mime-types');
+const fs = require('fs-extra')
 var constants = require('../configs/constants');
 var helpers = require('../configs/helpers');
 var contents = require('../configs/contents');
@@ -9,7 +11,7 @@ var models = require('../configs/models');
 let router = new Router();
 
 router.get('/user/list', [
-  //middlewares.sessionRequiredFalse, 
+  //middlewares.sessionRequiredFalse,  
   async (ctx, next) => {
     var resp = {};
     var status = 200;
@@ -54,6 +56,23 @@ router.get('/user/list', [
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = status;
     ctx.body = JSON.stringify(resp);
+  }
+]);
+
+router.post('/user/picture/upload', [
+  //middlewares.sessionRequiredFalse, 
+  async (ctx, next) => {
+    const {path, name, type} = ctx.request.files.picture_file;
+    const fileExtension = mime.extension(type);
+    try {
+      await fs.copy(path, `public/uploads/${name}`);
+      console.log('success!')
+    } catch (err) {
+      console.error(err)
+    }
+    ctx.set('Content-Type', 'text/html; charset=utf-8');
+    ctx.status = 200;
+    ctx.body = 'XD';
   }
 ]);
 

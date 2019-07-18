@@ -44,8 +44,14 @@ const admin = {
   pass: 'sistema123'
 };
 
+const uploader_options = {
+  multipart: true, 
+  uploadDir: '.'
+};
+
 exports.data = data;
 exports.services = services;
 exports.middlewares = middlewares;
 exports.admin = admin;
 exports.session = session;
+exports.uploader_options = uploader_options;

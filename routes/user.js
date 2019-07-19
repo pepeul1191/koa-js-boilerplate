@@ -19,40 +19,13 @@ router.get('/user/list', [
     var step = parseInt(ctx.request.query.step);
     var skip = (page - 1) * step;
     // get users in range of page
-    await models.User.find({}, function(err, documents){
-      if (err){
-        status = 500;
-        resp = JSON.parse([
-          'Se ha producido un error en listar los usuarios en ese rango',
-          err.toString()
-        ]);
-      }else{
-        if(documents.length == 0){
-          resp.users = [];
-        }else{
-          resp.users = documents;
-        }
-      }
-    }).select({ 
+    resp.users = await models.User.find({}).select({ 
       user: 1, 
       email: 2,
-    }).skip(skip).limit(step);
+    }).skip(skip).limit(step).exec();
     // get count of users
-    await models.User.countDocuments({}, function(err, count){
-      if (err){
-        status = 500;
-        resp = JSON.parse([
-          'Se ha producido un error en contar los usuarios',
-          err.toString()
-        ]);
-      }else{
-        if(count.length == 0){
-          resp.count = 0;
-        }else{
-          resp.count = count;
-        }
-      }
-    });
+    resp.count = await models.User.countDocuments({});
+    // response
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = status;
     ctx.body = JSON.stringify(resp);
@@ -72,6 +45,7 @@ router.post('/user/picture/upload', [
     } catch (err) {
       ctx.throw(500, err);
     }
+    // response
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = 200;
     ctx.body = resp;
@@ -118,11 +92,13 @@ router.post('/user/save', [
           user: user_json.user
         }).exec();
         var proceed = true;
+        // check new user name is unique except himself
         if(temp1 != null){
           if(temp1._id != user_json.id){
             proceed = false;
           }
         }
+        // check new user email is unique except himself
         if(proceed == true){
           var temp2 = await models.User.findOne({
             email: user_json.email
@@ -133,6 +109,7 @@ router.post('/user/save', [
             }
           }
         }
+        // proceed if pass two validations
         if(proceed){
           await models.User.findByIdAndUpdate(
             user_json.id,
@@ -155,6 +132,7 @@ router.post('/user/save', [
     } catch (err) {
       ctx.throw(500, err);
     }
+    // response
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = status;
     ctx.body = JSON.stringify(resp);

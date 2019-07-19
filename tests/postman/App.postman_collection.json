@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "User save",
+			"name": "User save, create one",
 			"request": {
 				"url": "localhost:3000/user/save",
 				"method": "POST",
@@ -18,7 +18,28 @@
 					"formdata": [
 						{
 							"key": "data",
-							"value": "{\"id\":\"E\",\"user\":\"adf\",\"pass\":\"123\",\"email\":\"ads@adsfad.com\",\"profile_picture\":\"default_user.png\"}",
+							"value": "{\"id\":\"E\",\"user\":\"adf12\",\"pass\":\"123\",\"email\":\"ads@adsfad.c2om\",\"profile_picture\":\"default_user.png\"}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User save, edit one",
+			"request": {
+				"url": "localhost:3000/user/save",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{\"id\":\"5d31262e1cff1d2499439f5e\",\"user\":\"pepes\",\"pass\":\"123\",\"email\":\"pepe.valdivia.caballero@gmail.coms\",\"profile_picture\":\"default_user.png\"}",
 							"description": "",
 							"type": "text"
 						}

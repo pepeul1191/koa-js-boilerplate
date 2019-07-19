@@ -84,10 +84,8 @@ router.post('/user/save', [
     var status = 200;
     var resp = {
       action_executed: '',
-      data: '',
     };
     try {
-      console.log(ctx.request.body.data);
       var user_json = JSON.parse(ctx.request.body.data);
       if(user_json.id == 'E'){
         // create user
@@ -102,19 +100,57 @@ router.post('/user/save', [
           resp.action_executed = 'none';
           resp.data = 'Usuario y/o correo repetidos';
         }else{
+          // create user
           var user = new models.User({
             user: user_json.user, 
             pass: user_json.pass, 
             email: user_json.email, 
             profile_picture: user_json.profile_picture, 
-            status: 'activation_pending', 
+            status: 'active', 
           });
           var new_user = await user.save();
           resp.action_executed = 'create';
-          resp.data = new_user._id;
+          resp._id = new_user._id;
         }
       }else{
         // edit user
+        var temp1 = await models.User.findOne({
+          user: user_json.user
+        }).exec();
+        var proceed = true;
+        if(temp1 != null){
+          if(temp1._id != user_json.id){
+            proceed = false;
+          }
+        }
+        if(proceed == true){
+          var temp2 = await models.User.findOne({
+            email: user_json.email
+          }).exec();
+          if(temp2 != null){
+            if(temp2._id != user_json.id){
+              proceed = false;
+            }
+          }
+        }
+        if(proceed){
+          await models.User.findByIdAndUpdate(
+            user_json.id,
+            {
+              $set: {
+                user: user_json.user, 
+                pass: user_json.pass, 
+                email: user_json.email, 
+                profile_picture: user_json.profile_picture, 
+              }
+            }
+          );
+          resp.action_executed = 'edit';
+        }else{
+          status = 409;
+          resp.action_executed = 'none';
+          resp.data = 'Usuario y/o correo ya asignados a un usuario';
+        }
       }
     } catch (err) {
       ctx.throw(500, err);

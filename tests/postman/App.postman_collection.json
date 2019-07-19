@@ -1,0 +1,32 @@
+{
+	"variables": [],
+	"info": {
+		"name": "App",
+		"_postman_id": "41734f1d-b165-fe96-92cb-40a4ba38848b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User save",
+			"request": {
+				"url": "localhost:3000/user/save",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"value": "{\"id\":\"E\",\"user\":\"adf\",\"pass\":\"123\",\"email\":\"ads@adsfad.com\",\"profile_picture\":\"default_user.png\"}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

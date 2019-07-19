@@ -166,10 +166,11 @@ var UserListView = Backbone.View.extend({
 		if(validation_pass == false){
 			throw new Error('UserListView validateFillForm Error');
 		}else{
+			// send user to sever
 			this.user.set('user', $(this.txtUser).val());
 			this.user.set('pass', $(this.txtPass).val());
 			this.user.set('email', $(this.txtEmail).val());
-			console.log(JSON.stringify(this.user));
+			this.userService.save(JSON.stringify(this.user));
 		}
 	},
 	uploadPicture: function(){

@@ -28,7 +28,7 @@ var UserService = {
     });
     return resp;
   },
-  save: function(user){
+  save: function(data){
     var resp = {
       status: 200, 
       message: ''
@@ -37,8 +37,7 @@ var UserService = {
       type: 'POST',
       url: BASE_URL + 'user/save',
       data: { 
-        id: user.id,
-        page: page,
+        data: data,
       },
       headers: {
         [CSRF_KEY]: CSRF,
@@ -83,7 +82,7 @@ var UserService = {
 			}
     });
     return resp;
-  }
+  },
 };
 
 export default UserService;

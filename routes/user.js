@@ -78,4 +78,51 @@ router.post('/user/picture/upload', [
   }
 ]);
 
+router.post('/user/save', [
+  //middlewares.sessionRequiredFalse, 
+  async (ctx, next) => {
+    var status = 200;
+    var resp = {
+      action_executed: '',
+      data: '',
+    };
+    try {
+      console.log(ctx.request.body.data);
+      var user_json = JSON.parse(ctx.request.body.data);
+      if(user_json.id == 'E'){
+        // create user
+        // validate user and email must be unique in db
+        var temp = await models.User.findOne({$or: [
+          {user: user_json.user},
+          {email: user_json.email},
+        ]}).exec();
+        if(temp){
+          // error, neither user nor email are unique
+          status = 409;
+          resp.action_executed = 'none';
+          resp.data = 'Usuario y/o correo repetidos';
+        }else{
+          var user = new models.User({
+            user: user_json.user, 
+            pass: user_json.pass, 
+            email: user_json.email, 
+            profile_picture: user_json.profile_picture, 
+            status: 'activation_pending', 
+          });
+          var new_user = await user.save();
+          resp.action_executed = 'create';
+          resp.data = new_user._id;
+        }
+      }else{
+        // edit user
+      }
+    } catch (err) {
+      ctx.throw(500, err);
+    }
+    ctx.set('Content-Type', 'text/html; charset=utf-8');
+    ctx.status = status;
+    ctx.body = JSON.stringify(resp);
+  }
+]);
+
 exports.routes = router.middleware();

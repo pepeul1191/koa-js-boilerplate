@@ -49,7 +49,7 @@ var UserService = {
       error: function(xhr, status, error){
         console.error(error);
 				resp.message = JSON.parse(xhr.responseText);
-				resp.status = 500;
+        resp.status = xhr.status;
       }
     });
     return resp;

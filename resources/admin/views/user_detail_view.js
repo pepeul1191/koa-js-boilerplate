@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 import UserDetailTemplate from '../templates/user_detail_template';
 import UserService from '../services/user_service';
+import StateService from '../services/state_service';
 import User from '../models/user';
 
 var UserListView = Backbone.View.extend({
@@ -12,13 +13,15 @@ var UserListView = Backbone.View.extend({
 		this.events = this.events || {};
 		// services
 		this.userService = UserService;
+		this.stateService = StateService;
 		// modal
+		this.modalContainer = '#modal-container';
+		this.modalTitle = '#modalTitle';
 		this.modalButton = '#btnModal';
-		this.modalContainer = $('#modal-container');
 		// models
 		this.user = new User();
 		// forms
-		this.message = '#message';
+		this.message = '#userDetailMessage';
 		this.txtUser = '#txtUser';
 		this.txtEmail = '#txtEmail';
 		this.txtPass = '#txtPass';
@@ -30,40 +33,51 @@ var UserListView = Backbone.View.extend({
 		this.filePicture = '#filePicture';
 		this.btnUploadPicture = '#btnUploadPicture';
 		this.btnGeneratePassword = '#btnGeneratePassword';
+		this.btnSelectPicture = '#btnSelectPicture';
 		this.txtPictureHelp = '#txtPictureHelp';
 		this.btnSaveUser = '#btnSaveUser';
 		this.imgPicture = '#imgPicture';
+		this.selState = '#selState';
+		this.selStateHelp = '#selStateHelp';
 	},
 	events: {
 		'click .close-modal': 'closeModal',
 		'keydown' : 'keydownHandler',
 		'click #btnGeneratePassword': 'generatePassword',
 		'click #btnSaveUser': 'saveUser',
-		'click #btnUploadPicture': 'uploadPicture'
-  },
+		'click #btnUploadPicture': 'uploadPicture',
+		'click #btnSelectPicture': 'selectPicture',
+	},
+	selectPicture: function(){
+		$(this.filePicture).click();
+	},
   renderCreate: function(){
 		$(this.modalButton).click();
+		var states = this.stateService.list();
+		var user = {};
+		// get user if _id != 'E'
     $(this.el).html(
       UserDetailTemplate({
         title: 'Crear Usuario',
         base_url: BASE_URL,
-        user: {},
+				user: user,
+				states: states,
 			})
 		);
 		// show modal
 		$('body').addClass('modal-open');
 		$('.modal-backdrop').removeClass('d-none');
-		this.modalContainer.removeClass('d-none');
+		$(this.modalContainer).removeClass('d-none');
 		// focus modal
 		$('#txtUser').focus();
 		// set id 'E' for new User
-		this.user.set('id',  'E');
+		this.user.set('_id',  'E');
 	},
 	closeModal: function(){
 		// hide modal
   	$('body').removeClass('modal-open');
 		$('.modal-backdrop').addClass('d-none');
-		this.modalContainer.addClass('d-none');
+		$(this.modalContainer).addClass('d-none');
 		// redirect
 		window.location.href = BASE_URL + 'admin/#/';
 	},
@@ -162,6 +176,19 @@ var UserListView = Backbone.View.extend({
 			$(this.txtPassRepeatHelp).removeClass('text-danger');
 			$(this.txtPassRepeat).removeClass('has-danger');
 		}
+		// selState selected
+		if($(this.selState).val() == 'E'){
+			validation_pass = false;
+			$(this.selStateHelp).html('Debe seleccionar un estado');
+			$(this.selStateHelp).removeClass('text-success');
+			$(this.selStateHelp).addClass('text-danger');
+			$(this.selState).addClass('has-danger');
+		}else{
+			$(this.selStateHelp).html('');
+			$(this.selStateHelp).addClass('text-success');
+			$(this.selStateHelp).removeClass('text-danger');
+			$(this.selState).removeClass('has-danger');
+		}
 		// check validation pass
 		if(validation_pass == false){
 			throw new Error('UserListView validateFillForm Error');
@@ -170,7 +197,36 @@ var UserListView = Backbone.View.extend({
 			this.user.set('user', $(this.txtUser).val());
 			this.user.set('pass', $(this.txtPass).val());
 			this.user.set('email', $(this.txtEmail).val());
-			this.userService.save(JSON.stringify(this.user));
+			this.user.set('state_id', $(this.selState).val());
+			var resp = this.userService.save(JSON.stringify(this.user));
+			if(resp.status == 200){
+				if (resp.message.action_executed == 'create'){
+					// set _id to model
+					this.user.set('_id', resp.message._id);
+					// show success message
+					$(this.message).addClass('text-success');
+					$(this.message).removeClass('text-danger');
+					$(this.message).html('Se ha registrado un nuevo usuario');
+					$(this.modalTitle).html('Editar Usuario');
+				}
+				if (resp.message.action_executed == 'edit'){
+					// show success message
+					$(this.message).addClass('text-success');
+					$(this.message).removeClass('text-danger');
+					$(this.message).html('Se ha editado un usuario');
+				}
+			}else if(resp.status == 409){
+				// controled error
+				// show success error
+				$(this.message).addClass('text-danger');
+				$(this.message).removeClass('text-success');
+				$(this.message).html(resp.message.data);
+			}else{
+				// not controled error
+				$(this.message).addClass('text-danger');
+				$(this.message).removeClass('text-success');
+				$(this.message).html('Ha ocurrido un error no esperado');
+			}
 		}
 	},
 	uploadPicture: function(){

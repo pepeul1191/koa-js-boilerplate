@@ -61,7 +61,7 @@ router.post('/user/save', [
     };
     try {
       var user_json = JSON.parse(ctx.request.body.data);
-      if(user_json.id == 'E'){
+      if(user_json._id == 'E'){
         // create user
         // validate user and email must be unique in db
         var temp = await models.User.findOne({$or: [
@@ -80,7 +80,8 @@ router.post('/user/save', [
             pass: user_json.pass, 
             email: user_json.email, 
             profile_picture: user_json.profile_picture, 
-            status: 'active', 
+            state_id: user_json.state_id,
+            systems: [],
           });
           var new_user = await user.save();
           resp.action_executed = 'create';
@@ -94,7 +95,7 @@ router.post('/user/save', [
         var proceed = true;
         // check new user name is unique except himself
         if(temp1 != null){
-          if(temp1._id != user_json.id){
+          if(temp1._id != user_json._id){
             proceed = false;
           }
         }
@@ -104,7 +105,7 @@ router.post('/user/save', [
             email: user_json.email
           }).exec();
           if(temp2 != null){
-            if(temp2._id != user_json.id){
+            if(temp2._id != user_json._id){
               proceed = false;
             }
           }
@@ -112,13 +113,14 @@ router.post('/user/save', [
         // proceed if pass two validations
         if(proceed){
           await models.User.findByIdAndUpdate(
-            user_json.id,
+            user_json._id,
             {
               $set: {
                 user: user_json.user, 
                 pass: user_json.pass, 
                 email: user_json.email, 
                 profile_picture: user_json.profile_picture, 
+                state_id: user_json.state_id,
               }
             }
           );

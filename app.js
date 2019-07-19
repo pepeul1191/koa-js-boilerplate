@@ -14,6 +14,7 @@ const errorRouter = require('./routes/error');
 const loginRouter = require('./routes/login');
 const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
+const stateRouter = require('./routes/state');
 // new app
 const app = new Koa();
 app.keys = ['rnbfpzfuywmiwtfrrlomwlzlhdxfxjnfifzvkrloobswyoifkt'];
@@ -42,6 +43,7 @@ app.use(errorRouter.routes);
 app.use(loginRouter.routes);
 app.use(adminRouter.routes);
 app.use(userRouter.routes);
+app.use(stateRouter.routes);
 // error 404 handler
 app.use(middlewares.errorNotFoundHandler);
 // port

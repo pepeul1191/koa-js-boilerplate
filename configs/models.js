@@ -13,6 +13,7 @@ var User = db.mongoose.model('users',
     pass: String,
     email: String,
     profile_picture: String,
+    state_id:  db.Schema.Types.ObjectId,
     systems: [UserSystem], 
   })
 );

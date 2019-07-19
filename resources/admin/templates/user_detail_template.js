@@ -4,14 +4,16 @@ var UserDetailTemplate = _.template(`
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel"><%= title %></h5>
+      <h5 class="modal-title" id="modalTitle"><%= title %></h5>
       <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
       <div class="row">
-        <label id="message"></label>
+        <div class="col-md-12">
+          <label id="userDetailMessage"></label>
+        </div>
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -28,6 +30,8 @@ var UserDetailTemplate = _.template(`
             <small id="txtEmailHelp" class="form-text"></small>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-md-6">
           <div class="form-group">
             <label for="txtPass">Contraseña</label>
@@ -42,14 +46,31 @@ var UserDetailTemplate = _.template(`
             <small id="txtPassRepeatHelp" class="form-text"></small>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="selState">Estado</label>
+            <select class="form-control" id="selState">
+              <option value="E"></option>
+              <% for (var i = 0; i < states.length; i++){ %>
+                <option value="<%= states[i]._id %>"><%= states[i].name %></option>
+              <% } %>
+            </select>
+            <small id="selStateHelp" class="form-text"></small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md-8">
           <div class="form-group">
             <label for="txtPicture">Imagen de Perfil</label>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="filePicture">
-              <label class="custom-file-label" for="filePicture">Choose file</label>
-            </div>
-            <button id="btnUploadPicture" class="btn btn-primary" style="margin-top: 3px;"> 
+            <button id="btnSelectPicture" class="btn btn-primary" style="margin-top: 3px;"> 
+              <i class="fa fa-search btn-icon" aria-hidden="true"></i>
+              Buscar Archivo
+            </button>
+            <input type="file" class="custom-file-input d-none" id="filePicture">
+            <button id="btnUploadPicture" class="btn btn-primary" style="margin-top: 3px; margin-left: 10px;"> 
               <i class="fa fa-upload btn-icon" aria-hidden="true"></i>
               Subir
             </button>

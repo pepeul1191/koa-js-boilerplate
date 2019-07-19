@@ -2,11 +2,12 @@ import Backbone from 'backbone';
 
 var User = Backbone.Model.extend({
   defaults: {
-    id: 'E',
+    _id: 'E',
     user: '',
     pass: '',
     email: '',
     profile_picture: 'default_user.png',
+    state_id: '',
   },
   initialize: function() {
   },

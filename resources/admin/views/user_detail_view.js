@@ -99,19 +99,55 @@ var UserListView = Backbone.View.extend({
 		var validation_pass = true;
 		// txtUser is fill
 		if($(this.txtUser).val() == ''){
-			validation_pass == false;
+			validation_pass = false;
+			$(this.txtUserHelp).html('Debe ingresar un usuario');
+			$(this.txtUserHelp).removeClass('text-success');
+			$(this.txtUserHelp).addClass('text-danger');
+			$(this.txtUser).addClass('has-danger');
+		}else{
+			$(this.txtUserHelp).html('');
+			$(this.txtUserHelp).addClass('text-success');
+			$(this.txtUserHelp).removeClass('text-danger');
+			$(this.txtUser).removeClass('has-danger');
 		}
 		// txtEmail is fill
 		if($(this.txtEmail).val() == ''){
-			
+			validation_pass = false;
+			$(this.txtEmailHelp).html('Debe ingresar un correo');
+			$(this.txtEmailHelp).removeClass('text-success');
+			$(this.txtEmailHelp).addClass('text-danger');
+			$(this.txtEmail).addClass('has-danger');
 		}else{
-
+			$(this.txtEmailHelp).html('');
+			$(this.txtEmailHelp).addClass('text-success');
+			$(this.txtEmailHelp).removeClass('text-danger');
+			$(this.txtEmail).removeClass('has-danger');
 		}
 		// txtEmail is email
-
+		if(this.validateEmail($(this.txtEmail).val()) == false){
+			validation_pass = false;
+			$(this.txtEmailHelp).html('Debe ingresar un correo válido');
+			$(this.txtEmailHelp).removeClass('text-success');
+			$(this.txtEmailHelp).addClass('text-danger');
+			$(this.txtEmail).addClass('has-danger');
+		}else{
+			$(this.txtEmailHelp).html('');
+			$(this.txtEmailHelp).addClass('text-success');
+			$(this.txtEmailHelp).removeClass('text-danger');
+			$(this.txtEmail).removeClass('has-danger');
+		}
 		// txtPass is fill
 		if($(this.txtPass).val() == ''){
-			
+			validation_pass = false;
+			$(this.txtPassHelp).html('Debe ingresar una contraseña');
+			$(this.txtPassHelp).removeClass('text-success');
+			$(this.txtPassHelp).addClass('text-danger');
+			$(this.txtPass).addClass('has-danger');
+		}else{
+			$(this.txtPassHelp).html('');
+			$(this.txtPassHelp).addClass('text-success');
+			$(this.txtPassHelp).removeClass('text-danger');
+			$(this.txtPass).removeClass('has-danger');
 		}
 		// txtPass and txtPassRepeat are equals
 		if($(this.txtPass).val() != $(this.txtPassRepeat).val()){
@@ -119,14 +155,21 @@ var UserListView = Backbone.View.extend({
 			$(this.txtPassRepeatHelp).html('Contraseñas deben ser iguales');
 			$(this.txtPassRepeatHelp).removeClass('text-success');
 			$(this.txtPassRepeatHelp).addClass('text-danger');
+			$(this.txtPassRepeat).addClass('has-danger');
 		}else{
 			$(this.txtPassRepeatHelp).html('');
 			$(this.txtPassRepeatHelp).addClass('text-success');
 			$(this.txtPassRepeatHelp).removeClass('text-danger');
+			$(this.txtPassRepeat).removeClass('has-danger');
 		}
 		// check validation pass
 		if(validation_pass == false){
 			throw new Error('UserListView validateFillForm Error');
+		}else{
+			this.user.set('user', $(this.txtUser).val());
+			this.user.set('pass', $(this.txtPass).val());
+			this.user.set('email', $(this.txtEmail).val());
+			console.log(JSON.stringify(this.user));
 		}
 	},
 	uploadPicture: function(){
@@ -147,6 +190,10 @@ var UserListView = Backbone.View.extend({
 			$(this.txtPictureHelp).html('Ha ocurrido un error en cargar la imagen');
 		}
 	},
+	validateEmail: function(email){
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}, 
 });
 
 export default UserListView;

@@ -54,14 +54,15 @@ var UserListView = Backbone.View.extend({
   renderCreate: function(){
 		$(this.modalButton).click();
 		var states = this.stateService.list();
-		var user = {};
-		// get user if _id != 'E'
     $(this.el).html(
       UserDetailTemplate({
         title: 'Crear Usuario',
-        base_url: BASE_URL,
-				user: user,
+				base_url: BASE_URL,
+				statics_url: STATICS_URL, 
+				user: this.user,
 				states: states,
+				message: '',
+				disabled: false,
 			})
 		);
 		// show modal
@@ -72,6 +73,60 @@ var UserListView = Backbone.View.extend({
 		$('#txtUser').focus();
 		// set id 'E' for new User
 		this.user.set('_id',  'E');
+	},
+	renderEdit: function(_id){
+		$(this.modalButton).click();
+		var states = this.stateService.list();
+		var resp = this.userService.get(_id);
+		var user = {};
+		var message = '';
+		if (resp.status == 200){
+			this.user.set('_id',  resp.message._id);
+			this.user.set('user',  resp.message.user);
+			this.user.set('email',  resp.message.email);
+			this.user.set('profile_picture',  resp.message.profile_picture);
+			this.user.set('state_id',  resp.message.state_id);
+			user = this.user;
+			$(this.el).html(
+				UserDetailTemplate({
+					title: 'Editar Usuario',
+					base_url: BASE_URL,
+					statics_url: STATICS_URL, 
+					user: user,
+					states: states,
+					message: message,
+					disabled: false,
+				})
+			);
+		}else {
+			if (resp.status == 409){
+				message = resp.message;
+			}else{
+				message = 'Ocurrió un no esperado en traer los datos del usuario a editar';
+			}
+			this.user.set('_id',  '');
+			this.user.set('user',  '');
+			this.user.set('email',  '');
+			this.user.set('profile_picture',  'default_user.png');
+			this.user.set('state_id',  '');
+			$(this.el).html(
+				UserDetailTemplate({
+					title: 'Editar Usuario',
+					base_url: BASE_URL,
+					statics_url: STATICS_URL, 
+					user: this.user,
+					states: states,
+					message: message,
+					disabled: true,
+				})
+			);
+		}
+		// show modal
+		$('body').addClass('modal-open');
+		$('.modal-backdrop').removeClass('d-none');
+		$(this.modalContainer).removeClass('d-none');
+		// focus modal
+		$('#txtUser').focus();
 	},
 	closeModal: function(){
 		// hide modal
@@ -150,31 +205,34 @@ var UserListView = Backbone.View.extend({
 			$(this.txtEmailHelp).removeClass('text-danger');
 			$(this.txtEmail).removeClass('has-danger');
 		}
-		// txtPass is fill
-		if($(this.txtPass).val() == ''){
-			validation_pass = false;
-			$(this.txtPassHelp).html('Debe ingresar una contraseña');
-			$(this.txtPassHelp).removeClass('text-success');
-			$(this.txtPassHelp).addClass('text-danger');
-			$(this.txtPass).addClass('has-danger');
-		}else{
-			$(this.txtPassHelp).html('');
-			$(this.txtPassHelp).addClass('text-success');
-			$(this.txtPassHelp).removeClass('text-danger');
-			$(this.txtPass).removeClass('has-danger');
-		}
-		// txtPass and txtPassRepeat are equals
-		if($(this.txtPass).val() != $(this.txtPassRepeat).val()){
-			validation_pass = false;
-			$(this.txtPassRepeatHelp).html('Contraseñas deben ser iguales');
-			$(this.txtPassRepeatHelp).removeClass('text-success');
-			$(this.txtPassRepeatHelp).addClass('text-danger');
-			$(this.txtPassRepeat).addClass('has-danger');
-		}else{
-			$(this.txtPassRepeatHelp).html('');
-			$(this.txtPassRepeatHelp).addClass('text-success');
-			$(this.txtPassRepeatHelp).removeClass('text-danger');
-			$(this.txtPassRepeat).removeClass('has-danger');
+		// validation pass only if user in new
+		if(this.user.get('_id') == 'E'){
+			// txtPass is fill
+			if($(this.txtPass).val() == ''){
+				validation_pass = false;
+				$(this.txtPassHelp).html('Debe ingresar una contraseña');
+				$(this.txtPassHelp).removeClass('text-success');
+				$(this.txtPassHelp).addClass('text-danger');
+				$(this.txtPass).addClass('has-danger');
+			}else{
+				$(this.txtPassHelp).html('');
+				$(this.txtPassHelp).addClass('text-success');
+				$(this.txtPassHelp).removeClass('text-danger');
+				$(this.txtPass).removeClass('has-danger');
+			}
+			// txtPass and txtPassRepeat are equals
+			if($(this.txtPass).val() != $(this.txtPassRepeat).val()){
+				validation_pass = false;
+				$(this.txtPassRepeatHelp).html('Contraseñas deben ser iguales');
+				$(this.txtPassRepeatHelp).removeClass('text-success');
+				$(this.txtPassRepeatHelp).addClass('text-danger');
+				$(this.txtPassRepeat).addClass('has-danger');
+			}else{
+				$(this.txtPassRepeatHelp).html('');
+				$(this.txtPassRepeatHelp).addClass('text-success');
+				$(this.txtPassRepeatHelp).removeClass('text-danger');
+				$(this.txtPassRepeat).removeClass('has-danger');
+			}
 		}
 		// selState selected
 		if($(this.selState).val() == 'E'){

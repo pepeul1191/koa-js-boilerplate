@@ -28,6 +28,32 @@ var UserService = {
     });
     return resp;
   },
+  get: function(_id){
+    var resp = {
+      status: 200, 
+      message: ''
+    };
+    $.ajax({
+      type: 'GET',
+      url: BASE_URL + 'user/get',
+      data: { 
+        _id: _id,
+      },
+      headers: {
+        [CSRF_KEY]: CSRF,
+      },
+      async: false,
+      success: function(data){
+				resp.message = JSON.parse(data);
+      },
+      error: function(xhr, status, error){
+        console.error(error);
+				resp.message = JSON.parse(xhr.responseText);
+				resp.status = xhr.status;
+      }
+    });
+    return resp;
+  },
   save: function(data){
     var resp = {
       status: 200, 

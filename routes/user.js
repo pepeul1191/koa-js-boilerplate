@@ -32,6 +32,36 @@ router.get('/user/list', [
   }
 ]);
 
+router.get('/user/get', [
+  //middlewares.sessionRequiredFalse,  
+  async (ctx, next) => {
+    var resp = {};
+    var status = 200;
+    var _id = ctx.request.query._id
+    // get users
+    var user = await models.User.findOne({
+      _id: _id
+    }).select({ 
+      user: 1, 
+      email: 2,
+      profile_picture: 3,
+      state_id: 4,
+    }).exec();
+    // check if user exist
+    if (user == null){
+      status = 409;
+      resp = 'Usuario no existe';
+    }else{
+      resp = user;
+    }
+    // get count of users
+    // response
+    ctx.set('Content-Type', 'text/html; charset=utf-8');
+    ctx.status = status;
+    ctx.body = JSON.stringify(resp);
+  }
+]);
+
 router.post('/user/picture/upload', [
   //middlewares.sessionRequiredFalse, 
   async (ctx, next) => {
@@ -112,18 +142,35 @@ router.post('/user/save', [
         }
         // proceed if pass two validations
         if(proceed){
-          await models.User.findByIdAndUpdate(
-            user_json._id,
-            {
-              $set: {
-                user: user_json.user, 
-                pass: user_json.pass, 
-                email: user_json.email, 
-                profile_picture: user_json.profile_picture, 
-                state_id: user_json.state_id,
+          if(user_json.pass == ''){
+            // not update the pass
+            await models.User.findByIdAndUpdate(
+              user_json._id,
+              {
+                $set: {
+                  user: user_json.user, 
+                  email: user_json.email, 
+                  profile_picture: user_json.profile_picture, 
+                  state_id: user_json.state_id,
+                }
               }
-            }
-          );
+            );
+          }else{
+            // update the pass
+            await models.User.findByIdAndUpdate(
+              user_json._id,
+              {
+                $set: {
+                  user: user_json.user, 
+                  pass: user_json.pass, 
+                  email: user_json.email, 
+                  profile_picture: user_json.profile_picture, 
+                  state_id: user_json.state_id,
+                }
+              }
+            );
+          }
+          
           resp.action_executed = 'edit';
         }else{
           status = 409;

@@ -37,14 +37,10 @@ var router = Backbone.Router.extend({
     this.userDetailView.renderCreate();
   },
   userEdit: function(id){
-    /*
-    if(this.systemView == null){
-      this.systemView = new SystemView();
+    if(this.userDetailView == null){
+      this.userDetailView = new UserDetailView();
     }
-    this.systemView.render();
-    this.systemView.tableSystem.listar();
-    */
-    alert('edit' + id);
+    this.userDetailView.renderEdit(id);
   },
   userMail: function(id){
     /*

@@ -5,7 +5,7 @@ import UserService from '../services/user_service';
 import StateService from '../services/state_service';
 import User from '../models/user';
 
-var UserListView = Backbone.View.extend({
+var UserDetailView = Backbone.View.extend({
 	el: '#modal-container',
 	initialize: function(){
 		//this.render();
@@ -249,7 +249,7 @@ var UserListView = Backbone.View.extend({
 		}
 		// check validation pass
 		if(validation_pass == false){
-			throw new Error('UserListView validateFillForm Error');
+			throw new Error('UserDetailView validateFillForm Error');
 		}else{
 			// send user to sever
 			this.user.set('user', $(this.txtUser).val());
@@ -311,4 +311,4 @@ var UserListView = Backbone.View.extend({
 	}, 
 });
 
-export default UserListView;
+export default UserDetailView;

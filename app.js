@@ -8,14 +8,7 @@ const koaBody = require('koa-body');
 const sockets = require('./configs/sockets');
 const middlewares = require('./configs/middlewares');
 const constants = require('./configs/constants');
-// export routes
-const homeRouter = require('./routes/home');
-const errorRouter = require('./routes/error');
-const loginRouter = require('./routes/login');
-const adminRouter = require('./routes/admin');
-const userRouter = require('./routes/user');
-const stateRouter = require('./routes/state');
-const systemRouter = require('./routes/system');
+const routes = require('./configs/routes');
 // new app
 const app = new Koa();
 app.keys = ['rnbfpzfuywmiwtfrrlomwlzlhdxfxjnfifzvkrloobswyoifkt'];
@@ -39,13 +32,7 @@ app.use(static(__dirname + '/public'));
 // error 500 handler
 app.use(middlewares.internalErrorHandler);
 // forward routes
-app.use(homeRouter.routes);
-app.use(errorRouter.routes);
-app.use(loginRouter.routes);
-app.use(adminRouter.routes);
-app.use(userRouter.routes);
-app.use(stateRouter.routes);
-app.use(systemRouter.routes);
+routes.register(app);
 // error 404 handler
 app.use(middlewares.errorNotFoundHandler);
 // port

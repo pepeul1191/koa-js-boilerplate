@@ -1,11 +1,7 @@
 const Router = require('koa-trie-router');
 const mime = require('mime-types');
 const fs = require('fs-extra')
-var constants = require('../configs/constants');
 var helpers = require('../configs/helpers');
-var contents = require('../configs/contents');
-var loginHelper = require('../helpers/login_helper');
-var middlewares = require('../configs/middlewares');
 var models = require('../configs/models');
 
 let router = new Router();

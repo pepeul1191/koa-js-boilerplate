@@ -24,6 +24,10 @@ Arrancar modo de desarrollo la aplicación web:
 
     $ mongorestore --db chat_db --host localhost --port 27017 db/chat_db
 
+## TODOs
+
++ routes/permission.js[]: delete permission from system
+
 ---
 
 Fuentes:

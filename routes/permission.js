@@ -3,7 +3,7 @@ var models = require('../configs/models');
 
 let router = new Router();
 
-router.get('/system/list', [
+router.get('/permission/list', [
   //middlewares.sessionRequiredFalse,  
   async (ctx, next) => {
     var resp = {};
@@ -11,12 +11,13 @@ router.get('/system/list', [
     var page = parseInt(ctx.request.query.page);
     var step = parseInt(ctx.request.query.step);
     var skip = (page - 1) * step;
-    // get systems in range of page
-    resp.systems = await models.System.find({}).select({ 
+    // get permissions in range of page
+    resp.permissions = await models.Permission.find({}).select({ 
       name: 1, 
+      key: 2, 
     }).skip(skip).limit(step).exec();
-    // get count of systems
-    resp.count = await models.System.countDocuments({});
+    // get count of permissions
+    resp.count = await models.Permission.countDocuments({});
     // response
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = status;
@@ -24,26 +25,27 @@ router.get('/system/list', [
   }
 ]);
 
-router.get('/system/get', [
+router.get('/permission/get', [
   //middlewares.sessionRequiredFalse,  
   async (ctx, next) => {
     var resp = {};
     var status = 200;
     var _id = ctx.request.query._id
-    // get systems
-    var system = await models.System.findOne({
+    // get permissions
+    var permission = await models.Permission.findOne({
       _id: _id
     }).select({ 
-      name: 1, 
+      name: 1,
+      key: 2, 
     }).exec();
-    // check if system exist
-    if (system == null){
+    // check if permission exist
+    if (permission == null){
       status = 409;
-      resp = 'Sistema no existe';
+      resp = 'Permiso no existe';
     }else{
-      resp = system;
+      resp = permission;
     }
-    // get count of systems
+    // get count of permissions
     // response
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = status;
@@ -51,7 +53,7 @@ router.get('/system/get', [
   }
 ]);
 
-router.post('/system/save', [
+router.post('/permission/save', [
   //middlewares.sessionRequiredFalse, 
   async (ctx, next) => {
     var status = 200;
@@ -59,47 +61,50 @@ router.post('/system/save', [
       action_executed: '',
     };
     try {
-      var system_json = JSON.parse(ctx.request.body.data);
-      if(system_json._id == 'E'){
-        // create user
-        // validate name must be unique in db
-        var temp = await models.System.findOne({$or: [
-          {name: system_json.name},
+      var permission_json = JSON.parse(ctx.request.body.data);
+      if(permission_json._id == 'E'){
+        // create permission
+        // validate name and key must be unique in db
+        var temp = await models.Permission.findOne({$or: [
+          {name: permission_json.name},
+          {key: permission_json.key},
         ]}).exec();
         if(temp){
-          // error, neither name nor email are unique
+          // error, neither name nor key are unique
           status = 409;
           resp.action_executed = 'none';
-          resp.data = 'Nombre de sistema repetido';
+          resp.data = 'Nombre o llave de permiso repetido';
         }else{
-          // create system
-          var system = new models.System({
-            name: system_json.name, 
-            permissions_id: [],
+          // create permission
+          var permission = new models.Permission({
+            name: permission_json.name, 
+            key: permission_json.key, 
           });
-          var new_system = await system.save();
+          var new_permission = await permission.save();
           resp.action_executed = 'create';
-          resp._id = new_system._id;
+          resp._id = new_permission._id;
         }
       }else{
-        // edit system
-        var temp1 = await models.System.findOne({
-          name: system_json.name
-        }).exec();
+        // edit permission
+        var temp1 = await models.Permission.findOne({$or: [
+          {name: permission_json.name},
+          {key: permission_json.key},
+        ]}).exec();
         var proceed = true;
-        // check new system name is unique except himself
+        // check new permission name is unique except himself
         if(temp1 != null){
-          if(temp1._id != system_json._id){
+          if(temp1._id != permission_json._id){
             proceed = false;
           }
         }
-        // proceed if pass two validations
+        // proceed if pass validation
         if(proceed){
-          await models.System.findByIdAndUpdate(
-            system_json._id,
+          await models.Permission.findByIdAndUpdate(
+            permission_json._id,
             {
               $set: {
-                name: system_json.name, 
+                name: permission_json.name, 
+                key: permission_json.key, 
               }
             }
           );         
@@ -107,7 +112,7 @@ router.post('/system/save', [
         }else{
           status = 409;
           resp.action_executed = 'none';
-          resp.data = 'Nombre de sistema ya asignado';
+          resp.data = 'Nombre o llave de permiso ya asignado';
         }
       }
     } catch (err) {
@@ -120,7 +125,7 @@ router.post('/system/save', [
   }
 ]);
 
-router.post('/system/delete', [
+router.post('/permission/delete', [
   //middlewares.sessionRequiredFalse, 
   async (ctx, next) => {
     var status = 200;
@@ -129,9 +134,10 @@ router.post('/system/delete', [
     };
     try {
       var _id = ctx.request.body._id;
-      await models.System.findOneAndDelete(_id);
+      await models.Permission.findOneAndDelete(_id);
+      // TODO: delete permission from array on permissions in system 
       resp.action_executed = 'deleted';
-      resp.data = 'Sistema eliminado';
+      resp.data = 'Permiso eliminado';
     } catch (err) {
       ctx.throw(500, err);
     }

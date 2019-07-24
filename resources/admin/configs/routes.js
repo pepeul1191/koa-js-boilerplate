@@ -7,35 +7,46 @@ import UserListView from '../views/user_list_view';
 import UserDetailView from '../views/user_detail_view';
 import SystemListView from '../views/system_list_view';
 import SystemDetailView from '../views/system_detail_view';
+import PermissionListView from '../views/permission_list_view';
+import PermissionDetailView from '../views/permission_detail_view';
 
 var router = Backbone.Router.extend({
   userListView: null,
   userDetailView: null,
   systemListView: null,
+  systemDetailView: null,
+  permissionListView: null,
+  permissionDetailView: null,
   initialize: function() {
   },
   routes: {
     '': 'index',
+    // user
     'user/create': 'userCreate',
     'user/edit/:id' : 'userEdit',
     'user/mail/:id' : 'userMail',
-    'user/delete/:id' : 'userDelete',
-    'permissions' : 'permissions',
+    // system
     'systems' : 'systems',
     'system/create': 'systemCreate',
     'system/edit/:id' : 'systemEdit',
+    // permission of system
+    'system/permission/:id' : 'permissions',
+    'permission/create': 'permissionCreate',
+    'permission/edit/:id' : 'permissionEdit',
+    // others
     '*actions' : 'default',
   },
+  default: function() {
+    //window.location.href = BASE_URL + "error/access/404";
+    window.location.href = BASE_URL + 'admin/#/';
+  },
+  // user
   index: function(){
     if(this.userListView == null){
       this.userListView = new UserListView();
     }
     this.userListView.render();
     //this.userListView.tableSystem.listar();
-  },
-  default: function() {
-    //window.location.href = BASE_URL + "error/access/404";
-    window.location.href = BASE_URL + 'admin/#/';
   },
   userCreate: function(){
     if(this.userDetailView == null){
@@ -50,28 +61,31 @@ var router = Backbone.Router.extend({
     this.userDetailView.renderEdit(id);
   },
   userMail: function(id){
-    /*
-    if(this.systemView == null){
-      this.systemView = new SystemView();
-    }
-    this.systemView.render();
-    this.systemView.tableSystem.listar();
-    */
-    alert('mail' + id);
+    alert('mail: ' + id);
   },
   userDelete: function(id){
-    /*
-    if(this.systemView == null){
-      this.systemView = new SystemView();
-    }
-    this.systemView.render();
-    this.systemView.tableSystem.listar();
-    */
     alert('delete' + id);
   },
-  permissions: function(){
-    alert('permissions');
+  // permission
+  permissions: function(id){
+    if(this.permissionListView == null){
+      this.permissionListView = new PermissionListView();
+    }
+    this.permissionListView.render();
   },
+  permissionCreate: function(){
+    if(this.permissionDetailView == null){
+      this.permissionDetailView = new PermissionDetailView();
+    }
+    this.permissionDetailView.renderCreate();
+  },
+  permissionEdit: function(id){
+    if(this.permissionDetailView == null){
+      this.permissionDetailView = new PermissionDetailView();
+    }
+    this.permissionDetailView.renderEdit(id);
+  },
+  // system
   systems: function(){
     if(this.systemListView == null){
       this.systemListView = new SystemListView();

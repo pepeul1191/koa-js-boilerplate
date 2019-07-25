@@ -192,20 +192,44 @@ router.post('/user/check', [
     var resp = '';
     var status = 200;
     // get count users with user and pass
-    var user = await models.User.findOne({$and: [
-      {user: ctx.request.body.user},
-      {pass: ctx.request.body.pass},
-    ]}).exec();
-    if(user == null){
+    var user = await models.User.aggregate([
+      {
+        $match: {
+          $and: [
+            {
+              'user': ctx.request.body.user
+            },
+            {
+              'pass': ctx.request.body.pass
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          'from': 'states',
+          'localField': 'state_id',
+          'foreignField': '_id',
+          'as': 'user_state'
+        }
+      },
+      {  
+        $unwind: '$user_state'
+      },
+      {   
+        $project:{
+          _id : 1,
+          email : 1,
+          user : 1,
+          state : '$user_state.name',
+        }
+      }
+    ]);
+    if(user == []){
       status = 409;
     }else{
       // get status
-      var status_doc = await models.State.findOne({
-        _id: user.state_id
-      }).select({
-        name: 1,
-      }).exec();
-      resp = status_doc.name;
+      resp = user[0].state;
     }
     // response
     ctx.set('Content-Type', 'text/html; charset=utf-8');

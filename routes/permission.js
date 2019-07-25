@@ -1,6 +1,6 @@
 const Router = require('koa-trie-router');
 var models = require('../configs/models');
-var database = require('../configs/database');
+var db = require('../configs/database');
 
 let router = new Router();
 
@@ -151,7 +151,7 @@ router.post('/permission/delete', [
         system_id,
         {
           $pull:{
-            permissions_id: database.mongoose.Types.ObjectId(_id),
+            permissions_id: db.mongoose.Types.ObjectId(_id),
           }
         }
       ).exec();

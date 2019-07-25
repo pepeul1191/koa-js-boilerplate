@@ -47,9 +47,14 @@ var System = db.mongoose.model('systems',
   })
 );
 
-// chat's models
-
-// ---
+var Menu = db.mongoose.model('menus',
+  new db.Schema({
+    name: String,
+    url: String,
+    type: String,
+    parent_id: [db.Schema.Types.ObjectId],
+  })
+);
 
 exports.User = User;
 exports.State = State;
@@ -57,3 +62,4 @@ exports.Log = Log;
 exports.Permission = Permission;
 exports.System = System;
 exports.UserSystem = UserSystem;
+exports.Menu = Menu;

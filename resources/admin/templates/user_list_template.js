@@ -25,6 +25,9 @@ var UserListTemplate = _.template(`
               <a href="<%= base_url %>admin/#/user/mail/<%= users[i]._id %>">
                 <i class="fa fa-envelope row-icon" aria-hidden="true"></i>
               </a>
+              <a href="<%= base_url %>admin/#/user/<%= users[i]._id %>/system">
+                <i class="fa fa-desktop row-icon" aria-hidden="true"></i>
+              </a>
             </td>
           </tr>
           <% } %>

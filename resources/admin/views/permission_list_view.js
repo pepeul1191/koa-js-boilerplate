@@ -11,7 +11,7 @@ var PermissionListView = Backbone.View.extend({
     this.permissionService = PermissionService;
 		this.message = '#message';
 		this.events = this.events || {};
-		this.page_size = 10;
+		this.page_size = 20;
 		this.page = 1;
 		this.pages = 0;
 	},

@@ -1,5 +1,6 @@
 const Router = require('koa-trie-router');
 var models = require('../configs/models');
+var database = require('../configs/database');
 
 let router = new Router();
 
@@ -143,8 +144,18 @@ router.post('/permission/delete', [
     };
     try {
       var _id = ctx.request.body._id;
+      var system_id = ctx.request.body.system_id;
       await models.Permission.findOneAndDelete(_id);
-      // TODO: delete permission from array on permissions in system 
+      // delete permission from array on permissions in system
+      await models.System.findOneAndUpdate(
+        system_id,
+        {
+          $pull:{
+            permissions_id: database.mongoose.Types.ObjectId(_id),
+          }
+        }
+      ).exec();
+      // response
       resp.action_executed = 'deleted';
       resp.data = 'Permiso eliminado';
     } catch (err) {

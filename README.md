@@ -26,7 +26,7 @@ Arrancar modo de desarrollo la aplicación web:
 
 ## TODOs
 
-+ routes/permission.js[]: delete permission from system
++ naa
 
 ---
 

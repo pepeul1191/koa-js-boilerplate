@@ -80,7 +80,7 @@ var PermissionService = {
     });
     return resp;
   },
-  delete: function(_id){
+  delete: function(system_id, _id){
     var resp = {
       status: 200, 
       message: ''
@@ -90,6 +90,7 @@ var PermissionService = {
       url: BASE_URL + 'permission/delete',
       data: { 
         _id: _id,
+        system_id: system_id,
       },
       headers: {
         [CSRF_KEY]: CSRF,

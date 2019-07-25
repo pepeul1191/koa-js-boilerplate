@@ -26,6 +26,9 @@ var SystemListTemplate = _.template(`
               <a href="<%= base_url %>admin/#/system/permission/<%= systems[i]._id %>">
                 <i class="fa fa-list row-icon" aria-hidden="true"></i>
               </a>
+              <a href="<%= base_url %>admin/#/system/menu/<%= systems[i]._id %>">
+                <i class="fa fa-chevron-right row-icon" aria-hidden="true"></i>
+              </a>
               <a class="delete-row" system_id="<%= systems[i]._id %>">
                 <i class="fa fa-times row-icon" aria-hidden="true"></i>
               </a>

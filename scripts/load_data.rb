@@ -23,13 +23,13 @@ def fill_users(states_ids)
       # obtener random state_id
       state_id = BSON::ObjectId.from_string(states_ids[rand(0..3)])
       line_array = line.split('::')
-      users.push({ 	
+      users.push({
         user: line_array[0],
         pass: line_array[1],
         email: line_array[2].strip,
-        profile_picture: 'default_user.png', 
+        profile_picture: 'default_user.png',
         state_id: state_id,
-        systems: [], 
+        systems: [],
       })
     end
   end

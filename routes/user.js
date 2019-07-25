@@ -7,7 +7,7 @@ var models = require('../configs/models');
 let router = new Router();
 
 router.get('/user/list', [
-  //middlewares.sessionRequiredFalse,  
+  //middlewares.sessionRequiredFalse,
   async (ctx, next) => {
     var resp = {};
     var status = 200;
@@ -15,8 +15,8 @@ router.get('/user/list', [
     var step = parseInt(ctx.request.query.step);
     var skip = (page - 1) * step;
     // get users in range of page
-    resp.users = await models.User.find({}).select({ 
-      user: 1, 
+    resp.users = await models.User.find({}).select({
+      user: 1,
       email: 2,
     }).skip(skip).limit(step).exec();
     // get count of users
@@ -29,7 +29,7 @@ router.get('/user/list', [
 ]);
 
 router.get('/user/get', [
-  //middlewares.sessionRequiredFalse,  
+  //middlewares.sessionRequiredFalse,
   async (ctx, next) => {
     var resp = {};
     var status = 200;
@@ -37,8 +37,8 @@ router.get('/user/get', [
     // get users
     var user = await models.User.findOne({
       _id: _id
-    }).select({ 
-      user: 1, 
+    }).select({
+      user: 1,
       email: 2,
       profile_picture: 3,
       state_id: 4,
@@ -59,7 +59,7 @@ router.get('/user/get', [
 ]);
 
 router.post('/user/picture/upload', [
-  //middlewares.sessionRequiredFalse, 
+  //middlewares.sessionRequiredFalse,
   async (ctx, next) => {
     var resp = '';
     try {
@@ -79,7 +79,7 @@ router.post('/user/picture/upload', [
 ]);
 
 router.post('/user/save', [
-  //middlewares.sessionRequiredFalse, 
+  //middlewares.sessionRequiredFalse,
   async (ctx, next) => {
     var status = 200;
     var resp = {
@@ -102,10 +102,10 @@ router.post('/user/save', [
         }else{
           // create user
           var user = new models.User({
-            user: user_json.user, 
-            pass: user_json.pass, 
-            email: user_json.email, 
-            profile_picture: user_json.profile_picture, 
+            user: user_json.user,
+            pass: user_json.pass,
+            email: user_json.email,
+            profile_picture: user_json.profile_picture,
             state_id: user_json.state_id,
             systems: [],
           });
@@ -144,9 +144,9 @@ router.post('/user/save', [
               user_json._id,
               {
                 $set: {
-                  user: user_json.user, 
-                  email: user_json.email, 
-                  profile_picture: user_json.profile_picture, 
+                  user: user_json.user,
+                  email: user_json.email,
+                  profile_picture: user_json.profile_picture,
                   state_id: user_json.state_id,
                 }
               }
@@ -157,16 +157,16 @@ router.post('/user/save', [
               user_json._id,
               {
                 $set: {
-                  user: user_json.user, 
-                  pass: user_json.pass, 
-                  email: user_json.email, 
-                  profile_picture: user_json.profile_picture, 
+                  user: user_json.user,
+                  pass: user_json.pass,
+                  email: user_json.email,
+                  profile_picture: user_json.profile_picture,
                   state_id: user_json.state_id,
                 }
               }
             );
           }
-          
+
           resp.action_executed = 'edit';
         }else{
           status = 409;
@@ -181,6 +181,36 @@ router.post('/user/save', [
     ctx.set('Content-Type', 'text/html; charset=utf-8');
     ctx.status = status;
     ctx.body = JSON.stringify(resp);
+  }
+]);
+
+// API
+
+router.post('/user/check', [
+  //middlewares.sessionRequiredFalse,
+  async (ctx, next) => {
+    var resp = '';
+    var status = 200;
+    // get count users with user and pass
+    var user = await models.User.findOne({$and: [
+      {user: ctx.request.body.user},
+      {pass: ctx.request.body.pass},
+    ]}).exec();
+    if(user == null){
+      status = 409;
+    }else{
+      // get status
+      var status_doc = await models.State.findOne({
+        _id: user.state_id
+      }).select({
+        name: 1,
+      }).exec();
+      resp = status_doc.name;
+    }
+    // response
+    ctx.set('Content-Type', 'text/html; charset=utf-8');
+    ctx.status = status;
+    ctx.body = resp;
   }
 ]);
 

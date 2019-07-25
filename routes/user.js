@@ -213,10 +213,10 @@ router.post('/user/check', [
           'as': 'user_state'
         }
       },
-      {  
+      {
         $unwind: '$user_state'
       },
-      {   
+      {
         $project:{
           _id : 1,
           email : 1,
@@ -225,7 +225,7 @@ router.post('/user/check', [
         }
       }
     ]);
-    if(user == []){
+    if(user.length == 0){
       status = 409;
     }else{
       // get status

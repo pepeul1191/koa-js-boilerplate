@@ -5,6 +5,7 @@ var Permission = Backbone.Model.extend({
     _id: 'E',
     name: '',
     key: '',
+    system_id: '',
   },
   initialize: function() {
   },

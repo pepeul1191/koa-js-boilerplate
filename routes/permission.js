@@ -83,6 +83,15 @@ router.post('/permission/save', [
           var new_permission = await permission.save();
           resp.action_executed = 'create';
           resp._id = new_permission._id;
+          // add permission to system document
+          await models.System.findOneAndUpdate(
+            permission_json.system_id,
+            {
+              $push:{
+                permissions_id: new_permission._id,
+              }
+            }
+          ).exec();
         }
       }else{
         // edit permission

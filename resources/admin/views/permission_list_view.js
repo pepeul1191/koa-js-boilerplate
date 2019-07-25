@@ -5,7 +5,8 @@ import PermissionListTemplate from '../templates/permission_list_template';
 import PermissionService from '../services/permission_service';
 
 var PermissionListView = Backbone.View.extend({
-	el: '#workspace',
+  el: '#workspace',
+  system_id: null,
 	initialize: function(){
     this.permissionService = PermissionService;
 		this.message = '#message';
@@ -31,6 +32,7 @@ var PermissionListView = Backbone.View.extend({
 				page: this.page,
         pages: this.pages,
         message: '',
+        system_id: this.system_id,
 			})
 		);
 	},

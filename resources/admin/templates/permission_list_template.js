@@ -22,7 +22,7 @@ var PermissionListTemplate = _.template(`
             <td><%= permissions[i].name %></td>
             <td><%= permissions[i].key %></td>
             <td class="text-center">
-              <a href="<%= base_url %>admin/#/permission/edit/<%= permissions[i]._id %>">
+              <a href="<%= base_url %>admin/#/permission/<%= system_id %>/edit/<%= permissions[i]._id %>">
                 <i class="fa fa-pencil row-icon" aria-hidden="true"></i>
               </a>
               <a class="delete-row" permission_id="<%= permissions[i]._id %>">
@@ -46,7 +46,7 @@ var PermissionListTemplate = _.template(`
               <% } %>
             </th>
             <th colspan="1">
-              <a href="<%= base_url %>admin/#/permission/create" class="btn btn-primary pull-right">
+              <a href="<%= base_url %>admin/#/permission/<%= system_id %>/create" class="btn btn-primary pull-right">
                 <i class="fa fa-plus btn-icon" aria-hidden="true"></i>
                 Agregar Registro
               </a>

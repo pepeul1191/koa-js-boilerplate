@@ -31,8 +31,8 @@ var router = Backbone.Router.extend({
     'system/edit/:id' : 'systemEdit',
     // permission of system
     'system/permission/:id' : 'permissions',
-    'permission/create': 'permissionCreate',
-    'permission/edit/:id' : 'permissionEdit',
+    'permission/:system_id/create': 'permissionCreate',
+    'permission/:system_id/edit/:id' : 'permissionEdit',
     // others
     '*actions' : 'default',
   },
@@ -71,19 +71,20 @@ var router = Backbone.Router.extend({
     if(this.permissionListView == null){
       this.permissionListView = new PermissionListView();
     }
+    this.permissionListView.system_id = id;
     this.permissionListView.render();
   },
-  permissionCreate: function(){
+  permissionCreate: function(system_id){
     if(this.permissionDetailView == null){
       this.permissionDetailView = new PermissionDetailView();
     }
-    this.permissionDetailView.renderCreate();
+    this.permissionDetailView.renderCreate(system_id);
   },
-  permissionEdit: function(id){
+  permissionEdit: function(system_id, id){
     if(this.permissionDetailView == null){
       this.permissionDetailView = new PermissionDetailView();
     }
-    this.permissionDetailView.renderEdit(id);
+    this.permissionDetailView.renderEdit(system_id, id);
   },
   // system
   systems: function(){

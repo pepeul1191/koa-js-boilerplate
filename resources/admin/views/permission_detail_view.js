@@ -5,7 +5,8 @@ import PermissionService from '../services/permission_service';
 import Permission from '../models/permission';
 
 var PermissionDetailView = Backbone.View.extend({
-	el: '#modal-container',
+  el: '#modal-container',
+  system_id: null,
 	initialize: function(){
 		//this.render();
     //console.log("initialize");
@@ -31,7 +32,7 @@ var PermissionDetailView = Backbone.View.extend({
 		'keydown' : 'keydownHandler',
     'click #btnSave': 'save',
 	},
-  renderCreate: function(){
+  renderCreate: function(system_id){
 		$(this.modalButton).click();
     $(this.el).html(
       PermissionDetailTemplate({
@@ -42,7 +43,8 @@ var PermissionDetailView = Backbone.View.extend({
 				message: '',
 				disabled: false,
 			})
-		);
+    );
+    this.system_id = system_id;
 		// show modal
 		$('body').addClass('modal-open');
 		$('.modal-backdrop').removeClass('d-none');
@@ -52,14 +54,16 @@ var PermissionDetailView = Backbone.View.extend({
 		// set id 'E' for new System
 		this.permission.set('_id',  'E');
 	},
-	renderEdit: function(_id){
+	renderEdit: function(system_id, _id){
 		$(this.modalButton).click();
 		var resp = this.permissionService.get(_id);
 		var message = '';
 		if (resp.status == 200){
+      this.system_id = system_id;
 			this.permission.set('_id',  resp.message._id);
       this.permission.set('name',  resp.message.name);
       this.permission.set('key',  resp.message.key);
+      this.permission.set('system_id',  system_id);
       var permission = this.permission;
 			$(this.el).html(
 				PermissionDetailTemplate({
@@ -104,7 +108,7 @@ var PermissionDetailView = Backbone.View.extend({
 		$('.modal-backdrop').addClass('d-none');
 		$(this.modalContainer).addClass('d-none');
 		// redirect
-		window.location.href = BASE_URL + 'admin/#/systems';
+		window.location.href = BASE_URL + 'admin/#/system/permission/' +  this.system_id;
 	},
 	keydownHandler: function(e){
 		switch(e.which){
@@ -158,6 +162,7 @@ var PermissionDetailView = Backbone.View.extend({
 			// send permission to sever
       this.permission.set('name', $(this.txtName).val());
       this.permission.set('key', $(this.txtKey).val());
+      this.permission.set('system_id', this.system_id);
 			var resp = this.permissionService.save(JSON.stringify(this.permission));
 			if(resp.status == 200){
 				if (resp.message.action_executed == 'create'){
